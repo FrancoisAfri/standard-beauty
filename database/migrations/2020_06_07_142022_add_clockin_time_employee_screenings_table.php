@@ -14,7 +14,7 @@ class AddClockinTimeEmployeeScreeningsTable extends Migration
     public function up()
     {
         Schema::table('employee_screenings', function ($table) {
-            $table->string('clockin_time')->unsigned()->index()->nullable();
+            $table->string('clockin_time')->index()->nullable();
         });
     }
 

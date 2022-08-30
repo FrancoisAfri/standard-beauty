@@ -14,7 +14,7 @@ class AddTrainingPolicyDocHrPeopleTable extends Migration
     public function up()
     {
          Schema::table('hr_people', function ($table) {
-            $table->string('training_policy_doc')->unsigned()->index()->nullable();
+            $table->string('training_policy_doc')->index()->nullable();
         });
     }
 

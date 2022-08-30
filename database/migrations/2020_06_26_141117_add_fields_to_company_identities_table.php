@@ -14,8 +14,8 @@ class AddFieldsToCompanyIdentitiesTable extends Migration
     public function up()
     {
         Schema::table('company_identities', function ($table) {
-            $table->string('brought_to_text')->unsigned()->index()->nullable();
-            $table->string('brought_to_text_image')->unsigned()->index()->nullable();
+            $table->string('brought_to_text')->index()->nullable();
+            $table->string('brought_to_text_image')->index()->nullable();
         });
     }
 

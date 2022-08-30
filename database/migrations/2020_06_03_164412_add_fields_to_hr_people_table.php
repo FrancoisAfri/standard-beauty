@@ -16,7 +16,7 @@ class AddFieldsToHrPeopleTable extends Migration
         Schema::table('hr_people', function ($table) {
             //
             $table->integer('transportation_method')->unsigned()->index()->nullable();
-            $table->string('chronic_diseases')->unsigned()->index()->nullable();
+            $table->string('chronic_diseases')->index()->nullable();
         });
     }
 

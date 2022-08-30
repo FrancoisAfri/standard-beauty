@@ -34,7 +34,9 @@ class DashboardController extends Controller
 
     public function index()
     {
+
 		$user = Auth::user()->load('person');
+
 		if ($user->person->id === 1) 
 		{
 			$companyID = 0;

@@ -14,7 +14,7 @@ class AddCompanyToHrPeopleTable extends Migration
     public function up()
     {
         Schema::table('hr_people', function($table) {
-            $table->string('company')->unsigned()->index()->nullable();
+            $table->string('company')->index()->nullable();
         });
     }
 

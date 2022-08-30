@@ -18,7 +18,7 @@ class PublicHolidaysTable extends Migration
 			 $table->integer('day')->index()->unsigned()->nullable();
 			 $table->integer('country_id')->index()->unsigned()->nullable();
 			 $table->integer('year')->index()->unsigned()->nullable();
-			 $table->string('name')->index()->unsigned()->nullable();
+			 $table->string('name')->index()->nullable();
             $table->timestamps();
         });
     }

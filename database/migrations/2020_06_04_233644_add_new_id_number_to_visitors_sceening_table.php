@@ -14,7 +14,7 @@ class AddNewIdNumberToVisitorsSceeningTable extends Migration
     public function up()
     {
         Schema::table('visitors_screenings', function ($table) {
-            $table->string('new_id_number')->unsigned()->index()->nullable();
+            $table->string('new_id_number')->index()->nullable();
         });
     }
 
