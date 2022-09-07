@@ -35,6 +35,9 @@
                                             <option value="4" {{ (!empty($module->access_level)) && $module->access_level == 4 ? ' selected' : '' }} >
                                                 Admin
                                             </option>
+											<option value="5" {{ (!empty($module->access_level)) && $module->access_level == 5 ? ' selected' : '' }} >
+                                                Super User
+                                            </option>
                                         </select>
                                     </td>
                                 </tr>
