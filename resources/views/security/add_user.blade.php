@@ -55,18 +55,6 @@
                                 </div>
                             </div>
                         </div>
-						 <div class="form-group">
-                            <label for="id_number" class="col-sm-3 control-label">ID Number</label>
-
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-book"></i>
-                                    </div>
-                                    <input type="number" class="form-control" id="id_number" name="id_number" value="{{ old('id_number') }}" placeholder="Enter ID Number..." required>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="cell_number" class="col-sm-3 control-label">Cell Number</label>
 
@@ -77,53 +65,6 @@
                                     </div>
                                     <input type="text" class="form-control" id="cell_number" name="cell_number" value="{{ old('cell_number') }}" data-inputmask='"mask": "(999) 999-9999"' placeholder="Enter Cell Number" data-mask required>
                                 </div>
-                            </div>
-                        </div>
-						<div class="form-group">
-                            <label for="employee_number" class="col-sm-3 control-label">Employee Number</label>
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-user"></i>
-                                    </div>
-                                    <input type="text" class="form-control" id="employee_number" name="employee_number" value="{{ old('employee_number') }}" placeholder="Enter Employee Number" required>
-                                </div>
-                            </div>
-                        </div>
-						@foreach($division_levels as $division_level)
-							<div class="form-group manual-field{{ $errors->has('division_level_' . $division_level->level) ? ' has-error' : '' }}">
-								<label for="{{ 'division_level_' . $division_level->level }}"
-									   class="col-sm-3 control-label">{{ $division_level->name }}</label>
-								<div class="col-sm-9">
-									<div class="input-group">
-										<div class="input-group-addon">
-											<i class="fa fa-black-tie"></i>
-										</div>
-										<select id="{{ 'division_level_' . $division_level->level }}"
-												name="{{ 'division_level_' . $division_level->level }}"
-												class="form-control"
-												onchange="divDDOnChange(this, null, 'add_users')">
-										</select>
-									</div>
-								</div>
-							</div>
-                        @endforeach
-						<div class="form-group">
-                            <label for="chronic_diseases" class="col-sm-3 control-label">Chronic Diseases</label>
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-home"></i>
-                                    </div>
-                                    <textarea name="chronic_diseases" class="form-control" placeholder="Enter Chronic Diseases" required>{{ old('employee_number') }}</textarea>
-                                </div>
-                            </div>
-                        </div>
-						<div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
-                            <label for="transportation_method" class="col-sm-3 control-label">Transportation Method</label>
-                            <div class="col-sm-9">
-                                <label class="radio-inline rdo-iCheck" style="padding-left: 0px;"><input type="radio" id="rdo_public" name="transportation_method" value="1" checked> Public</label>
-                                <label class="radio-inline rdo-iCheck"><input type="radio" id="rdo_private" name="transportation_method" value="2">  Private</label>
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">

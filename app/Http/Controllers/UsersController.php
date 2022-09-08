@@ -334,33 +334,12 @@ class UsersController extends Controller
         $validator = Validator::make($request->all(), [
 			'first_name' => 'required',
 			'surname' => 'required',
-			'id_number' => 'required',
 			'cell_number' => 'required',
-			'employee_number' => 'required',
-			'chronic_diseases' => 'required',
-			'transportation_method' => 'required',
 			'email' => 'required',
 			'password' => 'required',
-			'division_level_5' => 'required',
-			'division_level_4' => 'required',
-            'email' => 'unique:users,email',
+			'email' => 'unique:users,email',
             'email' => 'unique:hr_people,email',
         ]);
-        $validator->after(function ($validator) use($request) {
-            $idNumber = $request->input('id_number');
-			if (!empty($idNumber))
-			{
-				if(is_numeric($idNumber) && strlen($idNumber) == 13)
-					$idNumber = $idNumber;
-				else
-					$validator->errors()->add('id_number', "The ID Number Must have thirteen digits.");
-			}
-        });
-        if ($validator->fails()) {
-            return redirect("/users/create")
-                ->withErrors($validator)
-                ->withInput();
-        }
 
 		$compDetails = CompanyIdentity::first();
 		$iduration = !empty($compDetails->password_expiring_month) ? $compDetails->password_expiring_month : 0;

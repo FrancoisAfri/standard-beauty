@@ -28,30 +28,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="id_number" class="col-sm-3 control-label">ID Number</label>
-
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-book"></i>
-                                    </div>
-                                    <input type="number" class="form-control" id="id_number" name="id_number" value="{{ old('id_number') }}" placeholder="Search by ID number...">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="passport_number" class="col-sm-3 control-label">Passport Number</label>
-
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-book"></i>
-                                    </div>
-                                    <input type="text" class="form-control" id="passport_number" name="passport_number" value="{{ old('passport_number') }}" placeholder="Search by passport number...">
-                                </div>
-                            </div>
-                        </div>
 						<div class="form-group">
                             <label for="email" class="col-sm-3 control-label">Email</label>
 
