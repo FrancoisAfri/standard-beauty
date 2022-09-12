@@ -231,24 +231,6 @@
                                 </div>
                             </div>
                         </div>
-						<div class="form-group">
-                            <label for="chronic_diseases" class="col-sm-2 control-label">Chronic Diseases</label>
-                            <div class="col-sm-10">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-home"></i>
-                                    </div>
-                                    <textarea name="chronic_diseases" class="form-control" placeholder="Chronic Diseases">{{ $user->person->chronic_diseases }}</textarea>
-                                </div>
-                            </div>
-                        </div>
-						<div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
-                            <label for="transportation_method" class="col-sm-2 control-label">Transportation Method</label>
-                            <div class="col-sm-10">
-                                <label class="radio-inline rdo-iCheck" style="padding-left: 0px;"><input type="radio" id="rdo_public" name="transportation_method" value="1" {{ ($user->person->transportation_method == 1) ? ' checked' : '' }}> Public</label>
-                                <label class="radio-inline rdo-iCheck"><input type="radio" id="rdo_private" name="transportation_method" value="2" {{ ($user->person->transportation_method == 2) ? ' checked' : '' }}>  Private</label>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="profile_pic" class="col-sm-2 control-label">Profile Picture</label>
 
@@ -259,21 +241,6 @@
                                     </div>
                                 @endif
                                 <input type="file" id="profile_pic" name="profile_pic" class="file file-loading" data-allowed-file-extensions='["jpg", "jpeg", "png"]' data-show-upload="false">
-                            </div>
-                        </div>
-						<div class="form-group">
-                            <label for="training_policy_doc" class="col-sm-2 control-label">Worker Assessment Form Upload</label>
-
-                            <div class="col-sm-10">
-							@if(!empty($training_doc))
-								<a class="btn btn-default btn-flat btn-block pull-right "
-									href="{{Storage::disk('local')->url("training/$training_doc") }}"
-									target="_blank"><i class="fa fa-file-pdf-o"></i> View Document</a> 
-							@else
-								<a class="btn btn-default pull-centre "><i
-											class="fa fa-exclamation-triangle"></i> Nothing Uploaded</a>
-							@endif
-							<input type="file" id="training_policy_doc" name="training_policy_doc" class="file file-loading" data-allowed-file-extensions='["doc", "docx", "pdf"]' data-show-upload="false">
                             </div>
                         </div>
                         <div class="form-group">

@@ -362,7 +362,7 @@ class UsersController extends Controller
         //Save HR record
         $person = new HRPerson($personData);
         $person->status = 1;
-        $person->employee_number = $personData['employee_number'];
+        //$person->employee_number = $personData['employee_number'];
         $user->addPerson($person);
         //Send email
         Mail::to("$user->email")->send(new ConfirmRegistration($user, $request->password));

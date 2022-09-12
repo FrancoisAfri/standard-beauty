@@ -162,11 +162,11 @@
                             <div class="pull-left">
                                 <a href="{{ ($user->type === 2) ? '/contacts/profile' : '/users/profile' }}" class="btn btn-default btn-flat">Profile</a>
                             </div>
-							<div class="pull-left">
+							<!--<div class="pull-left">
 								<a class="btn btn-default btn-flat"
 													   href="{{ Storage::disk('local')->url("general/Final Worker_Covid Risk Assessment 1 May 2020.pdf") }}"
 													   target="_blank"> Risk Assessment</a
-                            </div>
+                            </div>-->
                             <div class="pull-right">
                                 <a href="{{ url('/logout') }}" class="btn btn-default btn-flat"
                                    onclick="event.preventDefault();
