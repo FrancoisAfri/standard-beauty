@@ -214,8 +214,8 @@
                                         <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#ffffff">
                                             <tr>
                                                 <td valign="top" style="padding-bottom:20px; background-color:#ffffff;">
-                                                    Hi {{ $user->person->first_name }},<br><br>
-                                                    We would like you to know that we have successfully created your new account with the {{ $company_name }} online system! Use the credentials below to login to the system. To view your profile or make any changes please <a target="_blank" href="{{ $profile_url }}">click here.</a>
+                                                    Hi {{ $contacts_users->person->first_name }},<br><br>
+                                                    We would like you to know that we have successfully created your new account with the {{ $company_name }} online system! Use the credentials below to login to the system. To view your profile or make any changes please download our app.
                                                 </td>
                                             </tr>
                                             <tr>
@@ -241,7 +241,7 @@
                                                                                                         Email Address:
                                                                                                     </td>
                                                                                                     <td class="data-value">
-                                                                                                        {{ $user->email }}
+                                                                                                        {{ $contacts_users->email }}
                                                                                                     </td>
                                                                                                 </tr>
                                                                                                 <tr>
@@ -278,7 +278,7 @@
                                     <td valign="top" class="footer-cell">
                                         {{ $full_company_name }}.<br>
                                         Please do not reply to this email. If you have received this email by mistake, please contact our support team on <a href="mailto:{{ $support_email }}">{{ $support_email }}</a>.<br>
-										Powered by <a href="http://afrixcel.co.za/" target="_blank">Afrixcel Business Solutions</a>
+										Powered by <a href="https://mkhayamk.co.za/" target="_blank">Mkhaya MK</a>
                                     </td>
                                 </tr>
                             </table>

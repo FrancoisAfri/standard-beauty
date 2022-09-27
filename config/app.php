@@ -166,7 +166,7 @@ return [
 		Maatwebsite\Excel\ExcelServiceProvider::class,
 		ZanySoft\Zip\ZipServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
-
+		RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         /*
          * Package Service Providers...
          */

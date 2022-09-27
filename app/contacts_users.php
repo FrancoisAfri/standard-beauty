@@ -19,4 +19,10 @@ class contacts_users extends Model
     {
 		return $this->hasOne(contacts::class, 'user_id');
     }
+	/// add user
+	
+	public function addPerson($person)
+    {
+        return $this->person()->save($person);
+    }
 }

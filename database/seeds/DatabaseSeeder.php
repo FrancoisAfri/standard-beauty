@@ -335,5 +335,40 @@ class DatabaseSeeder extends Seeder
         $ribbon->ribbon_path = 'audit/reports';
         $ribbon->access_level = 4;
         $module->addRibbon($ribbon); 
+		// add new module
+		$module = new modules(); //Employee Records
+        $module->active = 1;
+        $module->name = 'Routine Builder Management';
+        $module->code_name = 'routine';
+        $module->path = 'routine/manage';
+        $module->font_awesome = 'fa-users';
+        $module->save();
+
+        $ribbon = new module_ribbons();
+        $ribbon->active = 1;
+        $ribbon->sort_order = 1;
+        $ribbon->ribbon_name = 'Manage Routine';
+        $ribbon->description = 'Routine Management';
+        $ribbon->ribbon_path = 'routine/search';
+        $ribbon->access_level = 3;
+        $module->addRibbon($ribbon);
+		
+		$ribbon = new module_ribbons();
+        $ribbon->active = 1;
+        $ribbon->sort_order = 2;
+        $ribbon->ribbon_name = 'Routine Report';
+        $ribbon->description = 'Routine Report';
+        $ribbon->ribbon_path = 'routine/reports';
+        $ribbon->access_level = 3;
+        $module->addRibbon($ribbon);
+		
+		$ribbon = new module_ribbons();
+        $ribbon->active = 1;
+        $ribbon->sort_order = 3;
+        $ribbon->ribbon_name = 'Setup';
+        $ribbon->description = 'Setup';
+        $ribbon->ribbon_path = 'routine/setup';
+        $ribbon->access_level = 4;
+        $module->addRibbon($ribbon);
     }
 }

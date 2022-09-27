@@ -3,7 +3,7 @@
 namespace App\Mail;
 
 use App\CompanyIdentity;
-use App\User;
+use App\contacts_users;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -19,12 +19,12 @@ class ConfirmRegistration extends Mailable
      * @return void
      */
 
-    public $user;
+    public $contacts_users;
     public $generated_pw;
 
-    public function __construct(User $user, $randomPass)
+    public function __construct(contacts_users $contacts_users, $randomPass)
     {
-        $this->user = $user->load('person');
+        $this->contacts_users = $contacts_users->load('person');
         $this->generated_pw = $randomPass;
     }
 

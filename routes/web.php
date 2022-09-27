@@ -25,7 +25,7 @@ Route::get('demo-user', 'NewUsersRegistrationController@demo');
 Route::post('demo-user/register', 'NewUsersRegistrationController@demoStore');
 Route::post('create-new-account', 'NewUsersRegistrationController@store');
 Route::get('/', 'DashboardController@index');
-Route::get('test', 'PagesController@testPage');
+//Route::get('test', 'PagesController@testPage');
 Route::get('/home', function () {
     return Redirect::action('DashboardController@index');
 });
@@ -169,21 +169,8 @@ Route::patch('/survey/question_update/{question}', 'SurveysController@updateQues
 Route::get('/hr/setup', 'HrController@showSetup');
 Route::patch('/hr/grouplevel/{groupLevel}', 'HrController@updateGroupLevel');
 Route::get('/hr/grouplevel/activate/{groupLevel}', 'HrController@activateGroupLevel');
-// Screening
-Route::get('screening/view/questions/{viewID}', 'ScreeningController@viewQuestions');
-Route::get('screening/view/visitors-questions/{viewID}', 'ScreeningController@viewClientQuestions');
-Route::get('screening/visitors_screening', 'ScreeningController@index');
-Route::post('employee/screening', 'ScreeningController@store');
-Route::post('visitors/screening', 'ScreeningController@visitorsScreening');
-Route::get('screening/report', 'ScreeningController@reports');
-Route::post('screening/reports/employees', 'ScreeningController@getReport');
-Route::post('screening/reports/visitors', 'ScreeningController@getReportvis');
-Route::get('screening/setup', 'ScreeningController@setup');
-Route::post('/screening/setup', 'ScreeningController@saveSetup');
-Route::get('/screening/temp/record', 'ScreeningController@show');
-Route::post('/screening/temp/capt', 'ScreeningController@tempSave');
-Route::post('/screening/save-comment/{comment}', 'ScreeningController@addComment');
-
+// Contacts
+//contacts/search
 // CMS
 Route::get('cms/viewnews', 'CmsController@addnews');
 Route::post('cms/crm_news', 'CmsController@addcmsnews');
@@ -232,3 +219,44 @@ Route::get('api/tasks/emp/inductionTask/{divLvl}/{divID}', 'EmployeeTasksWidgetC
 Route::get('api/tasks/{task}/duration/{timeInSeconds}', 'TaskTimerController@updateDuration');
 Route::get('api/tasks/{task}/get-duration', 'TaskTimerController@getDuration');
 Route::post('api/contact-people-dropdown', 'DropDownAPIController@contactPeopleDD')->name('contactsdropdown');
+
+Route::group(['prefix' => 'customer', 'namespace' => 'customer', 'middleware' => ['auth']], function () {
+    Route::resource('/', CustomerManagementController::class);
+    /**
+     * custom CustomerManagementController routes
+     */
+    Route::get(
+        'search', 'CustomerManagementController@index')
+        ->name('customer.search');
+	Route::patch(
+        'act/{contact}', 'CustomerManagementController@activate')
+        ->name('customer.activate');
+	Route::delete(
+        'customer/{contact}', 'CustomerManagementController@destroy')
+        ->name('customer.destroy');
+	Route::get('show/{contact}', 'CustomerManagementController@show')
+        ->name('customer.show');
+	Route::patch('update/{contact}', 'CustomerManagementController@update')
+        ->name('customer.update');
+   
+});
+
+Route::group(['prefix' => 'routine', 'namespace' => 'routine', 'middleware' => ['auth']], function () {
+    Route::resource('/', RoutineBuilderController::class);
+    /**
+     * custom RoutineBuilderController routes
+     */
+
+    Route::get('search', 'RoutineBuilderController@index')
+        ->name('routine.search');
+	Route::get(
+        'act/{goal}', 'RoutineBuilderController@activate')
+        ->name('routine.goal.activate');
+	Route::delete(
+        'routine.goal.destroy/{goal}', 'RoutineBuilderController@destroy')
+        ->name('routine.goal.destroy');
+	Route::get('show/{goal}', 'RoutineBuilderController@show')
+        ->name('routine.show');
+	Route::patch('goal/update/{goal}', 'RoutineBuilderController@update')
+        ->name('routine.goal.update');
+});

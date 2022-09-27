@@ -23,4 +23,22 @@ class contacts extends Model
 	public function user() {
         return $this->belongsTo(contacts_users::class, 'user_id');
     }
+	// get all clients
+	public static function getAllCustomers($status = 1)
+    {
+		
+		if ($status == 1) 
+		{
+			$query = contacts::where([
+			'status' => $status
+			]);
+		}
+		else
+		{
+			//echo die('kdnnnf');
+			$query = contacts::where('status', '<>', 1);
+		}
+
+        return $query->get();
+    }
 }
