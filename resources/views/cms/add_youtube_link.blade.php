@@ -25,53 +25,23 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal" method="POST" action="/cms/{{$Cmsnews->id }}/update"
-                      enctype="multipart/form-data">
+                <form class="form-horizontal" method="POST" action="{{$link}}">
                     {{ csrf_field() }}
-                    {{ method_field('PATCH') }}
+					@if(!empty($post->id))
+						{{ method_field('PATCH') }}
+					@endif
                     <div class="box-body" id="view_users">
-                        <hr class="hr-text" data-content="Edit Content - {{ $Cmsnews->name }} ">
+                        <hr class="hr-text" data-content="Youtube Link">
                         <div class="form-group">
-                            <label for="path" class="col-sm-2 control-label"> Name</label>
+                            <label for="path" class="col-sm-2 control-label"> Link</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="name" name="name"
-                                       value="{{ $Cmsnews->name  }}"
-                                       placeholder="Enter Name" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="link" class="col-sm-2 control-label"> Link</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="link" name="link"
-                                       value="{{ $Cmsnews->link  }}"
+                                <input type="text" class="form-control" id="link_post" name="link_post"
+                                       value="{{!empty($post->link_post) ? $post->link_post : ''  }}"
                                        placeholder="Enter Link" required>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="exp_date" class="col-sm-2 control-label">Date </label>
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="text" class="form-control datepicker" id="exp_date" name="exp_date"
-                                           value="{{ ($Cmsnews->expirydate) ? date('d/m/Y',$Cmsnews->expirydate) : '' }}"
-                                           placeholder="Click to Select a Date...">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="profile_pic" class="col-sm-2 control-label">Image</label>
-
-                            <div class="col-sm-8">
-                                <div style="margin-bottom: 10px;">
-                                    <img src="{{ $avatar }}" class="img-responsive img-thumbnail" width="320" height="150">
-                                </div>
-                                <input type="file" id="image" name="image" class="file file-loading" data-allowed-file-extensions='["jpg", "jpeg", "png"]' data-show-upload="false">
-                            </div>
-                        </div>
                         <!-- Confirmation Modal -->
-                    @if(Session('success_application'))
+                    @if(Session('success_save'))
                         @include('cms.partials.success_action', ['modal_title' => "Content Edit Successful!", 'modal_content' => session('success_application')])
                     @endif
                     <!-- /.box-body -->

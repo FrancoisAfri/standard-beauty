@@ -177,9 +177,11 @@ Route::post('cms/crm_news', 'CmsController@addcmsnews');
 Route::get('cms/viewnews/{news}', 'CmsController@viewnews');
 Route::post('cms/updatenews', 'CmsController@updatenews');
 Route::get('cms/cmsnews_act/{news}', 'CmsController@newsAct');
-Route::get('/cms/news/{news}/delete', 'CmsController@deleteNews');
+Route::post('cms/news/delete/{news}', 'CmsController@deleteNews');
 Route::patch('cms/{news}/update', 'CmsController@updatContent');
-
+Route::get('cms/youtube', 'CmsController@youtubePost');
+Route::patch('cms/update_youtube/{link}', 'CmsController@updatYoutube');
+Route::post('cms/update_youtube', 'CmsController@updatYoutube');
 // cms search
 Route::get('cms/search', 'CmsController@search');
 Route::post('cms/search/CeoNews', 'CmsController@cmsceonews');
@@ -238,6 +240,9 @@ Route::group(['prefix' => 'customer', 'namespace' => 'customer', 'middleware' =>
         ->name('customer.show');
 	Route::patch('update/{contact}', 'CustomerManagementController@update')
         ->name('customer.update');
+	Route::get(
+        'challenges', 'CustomerManagementController@challenges')
+        ->name('customer.challenges');
    
 });
 
@@ -246,17 +251,28 @@ Route::group(['prefix' => 'routine', 'namespace' => 'routine', 'middleware' => [
     /**
      * custom RoutineBuilderController routes
      */
-
+ 
+	Route::post(
+        'save/{goal}', 'RoutineBuilderController@saveRoutine')
+        ->name('routine.save');
     Route::get('search', 'RoutineBuilderController@index')
         ->name('routine.search');
 	Route::get(
         'act/{goal}', 'RoutineBuilderController@activate')
         ->name('routine.goal.activate');
+	Route::get(
+        'activate/{routine}', 'RoutineBuilderController@activateRoutine')
+        ->name('routine.activate');
 	Route::delete(
-        'routine.goal.destroy/{goal}', 'RoutineBuilderController@destroy')
+        'goal/destroy/{goal}', 'RoutineBuilderController@destroy')
         ->name('routine.goal.destroy');
+	Route::delete(
+        '/destroy/{routine}', 'RoutineBuilderController@destroyRoutine')
+        ->name('routine.destroy');
 	Route::get('show/{goal}', 'RoutineBuilderController@show')
         ->name('routine.show');
 	Route::patch('goal/update/{goal}', 'RoutineBuilderController@update')
         ->name('routine.goal.update');
+	Route::patch('update/{routine}', 'RoutineBuilderController@updateRoutine')
+        ->name('routine.update');
 });

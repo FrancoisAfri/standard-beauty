@@ -85,6 +85,21 @@ class RoutineBuilderController extends Controller
 		$goal = new Goals($goalData);
         $goal->status = 1;
 		$goal->save();
+        AuditReportsController::store('Routine Builder Management', 'Goal Added', "Added By User", 0);;
+        return response()->json();
+    }
+	// save routine
+	public function saveRoutine (Request $request, Goals $goal)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+		
+		$routine = new Routines($request->all());
+        $routine->status = 1;
+        $routine->goal_id = $goal->id;
+		$routine->save();
         AuditReportsController::store('Routine Builder Management', 'Routine Added', "Added By User", 0);;
         return response()->json();
     }
@@ -97,11 +112,22 @@ class RoutineBuilderController extends Controller
      */
     public function show(Request $request, Goals $goal)
     {
+		//return $goal;
 		$status = !empty($request['status_id']) ? $request['status_id'] : 1;
-		$goal_id = !empty($request['goal_id']) ? $request['goal_id'] : $goal->id;
-        $goals = Goals::getAllGoals($status);
-
-		$routines = Routines::getAllRoutines($status, $goal_id);
+		$goal_id = !empty($request['goal_id']) ? $request['goal_id'] : 0;
+        $goals = Goals::
+				 orderBy('title', 'asc')
+				 ->get();
+		if (!empty($goal_id))
+		{
+			$goal = Goals::where('id',$goal_id)->first();
+			$routines = Routines::getAllRoutines($status, $goal_id);
+		}
+		else
+		{
+			$routines = Routines::getAllRoutines($status, $goal->id);
+			$goal_id = $goal->id; 
+		}
 		//return $routines;
         $data = $this->breadCrump(
             "Routine Builder Management",
@@ -148,7 +174,18 @@ class RoutineBuilderController extends Controller
      */
     public function update(Request $request, Goals $goal)
     {
+		//<a href="{{ route('student.detail', ['id' => 5, 'parameter' => 'advanced-web-hindi']) }}">Student detail</a>
 		$goal->update($request->all());
+
+        Alert::toast('Record Updated Successfully ', 'success');
+
+        AuditReportsController::store('Routine Builder Management', 'Goal Details Edited', "Edited By User", 0);
+        return response()->json();
+    }
+	// update routine
+	public function updateRoutine(Request $request, Routines $routine)
+    {
+		$routine->update($request->all());
 
         Alert::toast('Record Updated Successfully ', 'success');
 
@@ -165,8 +202,16 @@ class RoutineBuilderController extends Controller
     public function destroy(Goals $goal)
     {
         $goal->delete();
-		AuditReportsController::store('Routine Builder Management', 'Goal Deleted', "Edited By User", 0);;
+		AuditReportsController::store('Routine Builder Management', 'Goal Deleted', "Deleted By User", 0);;
         return redirect()->route('index')->with('status', 'Goal Deleted!');
+    } 
+	// delete routine
+	public function destroyRoutine(Routines $routine)
+    {
+		$goalID = $routine->goal_id;
+        $routine->delete();
+		AuditReportsController::store('Routine Builder Management', 'Routine Deleted', "Deleted By User", 0);;
+        return redirect()->route('routine.show',$routine->goal_id)->with('status', 'Routine Deleted!');
     }
 	
 	// activate and deactivate goal
@@ -179,5 +224,16 @@ class RoutineBuilderController extends Controller
 
         AuditReportsController::store('Routine Builder Management', 'Routine Builder Status Changed', " Changed By User", 0);
         return redirect()->route('index')->with('status', 'Goal Status Changed!');
+    }
+	// activate and deactivate routine
+	public function activateRoutine(Routines $routine)
+    {
+		$routine->status = !empty($routine->status) && $routine->status == 2 ? 1 : 2;
+		$routine->update();
+		
+		Alert::toast('Status changed', 'Status changed Successfully');
+
+        AuditReportsController::store('Routine Builder Management', 'Routine Builder Status Changed', " Changed By User", 0);
+        return redirect()->route('routine.show',$routine->goal_id)->with('status', 'Goal Status Changed!');
     }
 }

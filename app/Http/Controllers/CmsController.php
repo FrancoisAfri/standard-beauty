@@ -8,6 +8,7 @@ use App\HRPerson;
 use App\User;
 use App\cms_rating;
 use App\DivisionLevel;
+use App\YoutubePost;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditReportsController;
 use App\Http\Requests;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Stmt\Return_;
-
+use Illuminate\Http\RedirectResponse;
 class CmsController extends Controller
 {
     public function __construct()
@@ -26,24 +27,72 @@ class CmsController extends Controller
 
     public function addnews()
     {
-        $Cmsnews = Cmsnews::all();
+		$Cmsnews = Cmsnews::all();
         $divisionLevels = DivisionLevel::where('active', 1)->orderBy('id', 'desc')->get();
 
-        $data['page_title'] = "CMS";
+        $data['page_title'] = "Communications";
         $data['page_description'] = "Contents";
         $data['breadcrumb'] = [
-            ['title' => 'CMS', 'path' => '/News', 'icon' => 'fa fa-handshake-o', 'active' => 0, 'is_module' => 1],
+            ['title' => 'Communications', 'path' => '/News', 'icon' => 'fa fa-handshake-o', 'active' => 0, 'is_module' => 1],
             ['title' => 'Content Management', 'active' => 1, 'is_module' => 0]
         ];
         $data['active_mod'] = 'Content Management';
-        $data['active_rib'] = 'Add Content';
+        $data['active_rib'] = 'Manage Blog';
         $data['Cmsnews'] = $Cmsnews;
         $data['division_levels'] = $divisionLevels;
         
         AuditReportsController::store('Content Management', 'Content Added', "Content Content Management Accessed", 0);
-        return view('cms.viewcrmnews')->with($data);
-    }
+        return view('cms.viewmews')->with($data);
+    } 
+	// view and edit youtube link
+	public function youtubePost()
+    {
+		$post = YoutubePost::whereNotNull('link_post')->first();
 
+		if (!empty($post->link_post)) $link = "/cms/update_youtube/$post->id";
+		else $link = "/cms/update_youtube";
+		
+        $data['page_title'] = "Communications";
+        $data['page_description'] = "Contents";
+        $data['breadcrumb'] = [
+            ['title' => 'Communications', 'path' => '/News', 'icon' => 'fa fa-handshake-o', 'active' => 0, 'is_module' => 1],
+            ['title' => 'Content Management', 'active' => 1, 'is_module' => 0]
+        ];
+        $data['active_mod'] = 'Content Management';
+        $data['active_rib'] = 'Youtube Post';
+        $data['post'] = $post;
+        $data['link'] = $link;
+        
+        AuditReportsController::store('Content Management', 'link page', "link Accessed", 0);
+        return view('cms.add_youtube_link')->with($data);
+    }
+	// update youtube link post
+	public function updatYoutube(Request $request, YoutubePost $link)
+    {
+
+        $this->validate($request, [
+
+        ]);
+        $NewsData = $request->all();
+        unset($NewsData['_token']);
+
+		if (!empty($link->link_post))
+		{
+			$link->link_post = $NewsData['link_post'];
+			$link->update();
+		}
+		else 
+		{
+			$linkYou = new YoutubePost();
+			$linkYou->link_post = $NewsData['link_post'];
+			$linkYou->save();
+		}
+		
+        AuditReportsController::store('Content Management', 'Link Updated', "Link Saved", 0);
+        return redirect('/cms/youtube')->with('success_save', "Link Update successfully.");
+
+    }
+	
     public function addcmsnews(Request $request)
     {
         $this->validate($request, [
@@ -61,7 +110,6 @@ class CmsController extends Controller
         $crmNews->name = $NewsData['name'];
         $crmNews->link = $NewsData['link'];
         $crmNews->expirydate = $Expdate;
-        $crmNews->adv_number = $NewsData['adv_number'];
         $crmNews->status = 1;
         $crmNews->save();
 
@@ -89,16 +137,16 @@ class CmsController extends Controller
         $Cmsnews = Cmsnews::where('id', $news->id)->first();
         $divisionLevels = DivisionLevel::where('active', 1)->orderBy('id', 'desc')->get();
 
-        $data['page_title'] = "CMS";
+        $data['page_title'] = "Communications";
         $data['page_description'] = "Content";
         $data['breadcrumb'] = [
-            ['title' => 'CMS', 'path' => '/News', 'icon' => 'fa fa-handshake-o', 'active' => 0, 'is_module' => 1],
+            ['title' => 'Communications', 'path' => '/News', 'icon' => 'fa fa-handshake-o', 'active' => 0, 'is_module' => 1],
             ['title' => 'Content Management', 'active' => 1, 'is_module' => 0]
         ];
         $avatar = $Cmsnews->image;
         $data['avatar'] = (!empty($avatar)) ? Storage::disk('local')->url("CMS/images/$avatar") : '';
         $data['active_mod'] = 'Content Management';
-        $data['active_rib'] = 'Add Content';
+        $data['active_rib'] = 'Manage Blog';
         $data['Cmsnews'] = $Cmsnews;
         $data['division_levels'] = $divisionLevels;
         $data['hrDetails'] = $hrDetails;
@@ -146,7 +194,6 @@ class CmsController extends Controller
         $news->name = $NewsData['name'];
         $news->link = $NewsData['link'];
         $news->expirydate = $Expdate;
-		$news->adv_number = $NewsData['adv_number'];
         $news->update();
 
         if ($request->hasFile('image')) {
@@ -170,10 +217,10 @@ class CmsController extends Controller
         $newsID = $id->id;
         $Cmsnews = Cmsnews::where('id', $newsID)->first();
 
-        $data['page_title'] = "CMS ";
+        $data['page_title'] = "Communications";
         $data['page_description'] = "Content";
         $data['breadcrumb'] = [
-            ['title' => 'CMS Ceo News', 'path' => '/News', 'icon' => 'fa fa-handshake-o', 'active' => 0, 'is_module' => 1],
+            ['title' => 'Communications Ceo News', 'path' => '/News', 'icon' => 'fa fa-handshake-o', 'active' => 0, 'is_module' => 1],
             ['title' => 'Content Management', 'active' => 1, 'is_module' => 0]
         ];
         $data['active_mod'] = 'Content Management';
@@ -189,7 +236,7 @@ class CmsController extends Controller
         $newsID = $viewceo->id;
         $Cmsnews = ceoNews::where('id', $newsID)->first();
 
-        $data['page_title'] = "CMS ";
+        $data['page_title'] = "Communications";
         $data['page_description'] = "Content";
         $data['breadcrumb'] = [
             ['title' => 'CMS Ceo News', 'path' => '/News', 'icon' => 'fa fa-handshake-o', 'active' => 0, 'is_module' => 1],

@@ -19,6 +19,18 @@ class contacts extends Model
         return $this->hasMany(contacts_medications::class, 'contact_id');
     }
 	
+	public function skinProfile() {
+        return $this->hasMany(CustomerSkinProfile::class, 'contact_id');
+    }
+	
+	public function challenges() {
+        return $this->hasMany(challengesUsers::class, 'contact_id');
+    }
+	
+	public function challengesProgess() {
+        return $this->hasMany(challengesProgress::class, 'contact_id');
+    }
+	
 	//Relationship contacts and contacts_users
 	public function user() {
         return $this->belongsTo(contacts_users::class, 'user_id');

@@ -19,6 +19,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\Datatables\Facades\Datatables;
 use Illuminate\Support\Facades\Mail;
 use App\contacts;
+use App\CustomerSkinProfile;
 use App\contacts_users;
 use App\Mail\ConfirmRegistration;
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +36,7 @@ class CustomerManagementController extends Controller
     {
         $status = !empty($request['status_id']) ? $request['status_id'] : 1;
         $customers = contacts::getAllCustomers($status);
-
+		
         $data = $this->breadCrump(
             "Customer Management",
             "Manage Clients", "fa fa-lock",
@@ -131,8 +132,8 @@ class CustomerManagementController extends Controller
             "Customer Management",
             "Customer Management Search"
         );
-		$contact = $contact->load('medication');
-//return  $contact;
+		$contact = $contact->load('medication','skinProfile');
+
         $data['contact'] = $contact;
 		
         AuditReportsController::store(

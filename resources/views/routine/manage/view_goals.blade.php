@@ -1,12 +1,10 @@
 @extends('layouts.main_layout')
 @section('page_dependencies')
-
     <link rel="stylesheet" href="{{ asset('plugins/datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bootstrap_fileinput/css/fileinput.min.css" media="all" rel="stylesheet"
           type="text/css"') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
-
 @stop
 @section('content')
     <div class="row">
@@ -132,9 +130,7 @@
     <script src="{{ asset('plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
     <script src="{{ asset('custom_components/js/modal_ajax_submit.js') }}"></script>
     <script src="{{ asset('custom_components/js/deleteAlert.js') }}"></script>
-
     <script src="{{ asset('bower_components/bootstrap_fileinput/js/fileinput.min.js') }}"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
@@ -149,13 +145,11 @@
     <script src="/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.extensions.js"></script>
     <!-- End Bootstrap File input -->
     <script type="text/javascript">
-
 		//Phone mask
         $("[data-mask]").inputmask();
         function postData(id, data) {
             if (data === 'actdeac') location.href = "{{route('routine.goal.activate', '')}}" + "/" + id;
         }
-
         $('.popup-thumbnail').click(function(){
             $('.modal-body').empty();
             $($(this).parents('div').html()).appendTo('.modal-body');
@@ -163,15 +157,10 @@
         });
         //TODO WILL CREATE A SIGLE GLOBAL FILE
         $('.delete_confirm').click(function (event) {
-
             var form = $(this).closest("form");
-
             var name = $(this).data("name");
-
             event.preventDefault();
-
             swal({
-
                 title: `Are you sure you want to delete this record?`,
                 text: "If you delete this, it will be gone forever.",
                 icon: "warning",
@@ -187,11 +176,8 @@
                     }
                 });
         });
-
         $(function () {
-
             $('table.client').DataTable({
-
                 paging: true,
                 lengthChange: true,
                 searching: true,
@@ -203,14 +189,11 @@
                     'copy', 'csv', 'excel', 'pdf', 'print'
                 ]
             });
-
             //$('.modal').on('show.bs.modal', reposition);
-
             $('#add-client').on('click', function () {
                 let strUrl = '{{route('store')}}';
                 let modalID = 'add-client-modal';
                 let formName = 'add-client-form';
-
                 //console.log(formName)
                 let submitBtnID = 'add-client';
                 let redirectUrl = '{{ route('index') }}';
@@ -218,7 +201,6 @@
                 let successMsg = 'Record has been updated successfully.';
                 modalFormDataSubmit(strUrl, formName, modalID, submitBtnID, redirectUrl, successMsgTitle, successMsg);
             });
-
             // show modal info
             let clientId;
             $('#edit-client-modal').on('show.bs.modal', function (e) {
@@ -230,10 +212,8 @@
                 modal.find('#title').val(title);
                 modal.find('#description').val(description);
             });
-
             // update modal
             $('#edit-client').on('click', function () {
-
                 let strUrl = '/routine/goal/update/' + clientId;
                 let modalID = 'edit-client-modal';
                 let objData = {
@@ -241,7 +221,6 @@
                     title: $('#'+modalID).find('#title').val(),
                     _token: $('#'+modalID).find('input[name=_token]').val()
                 };
-
                 let submitBtnID = 'edit-client';
                 let redirectUrl = '{{ route('index') }}';
                 let successMsgTitle = 'Changes Saved!';
@@ -249,7 +228,6 @@
                 let Method = 'PATCH';
                 modalAjaxSubmit(strUrl, objData, modalID, submitBtnID, redirectUrl, successMsgTitle, successMsg, Method);
             });
-
         });
     </script>
 @stop

@@ -27,13 +27,6 @@
                                    placeholder="Enter Link" required>
                         </div>
                     </div>
-					<div class="form-group">
-                        <label for="adv_number" class="col-sm-2 control-label"> Position</label>
-                        <div class="col-sm-8">
-                            <input type="number" class="form-control" id="adv_number" name="adv_number" value=""
-                                   placeholder="Enter Position" required>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label for="exp_date" class="col-sm-2 control-label"> Expiring Date </label>
 

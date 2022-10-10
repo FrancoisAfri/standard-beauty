@@ -1,12 +1,10 @@
 @extends('layouts.main_layout')
 @section('page_dependencies')
-
     <link rel="stylesheet" href="{{ asset('plugins/datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('bower_components/bootstrap_fileinput/css/fileinput.min.css" media="all" rel="stylesheet"
           type="text/css"') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
-
 @stop
 @section('content')
     <div class="row">
@@ -19,7 +17,7 @@
                 <div class="box-body">
                     <div class="box-header">
                         <div class="form-group container-sm">
-                            <form class="form-horizontal" method="get" action="{{ route('index') }}">
+                            <form class="form-horizontal" method="get" action="{{ route('routine.show',$goal->id) }}">
                                 {{ csrf_field() }}
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -77,18 +75,15 @@
                                                         data-toggle="modal" data-target="#edit-routine-modal"
                                                         data-id="{{ $routine->id }}"
                                                         data-title="{{ $routine->title }}"
-                                                        data-description="{{$routine->description}}"
+                                                        data-content="{{$routine->content}}"
 														<i class="fa fa-pencil-square-o"></i> Edit
                                                 </button>
                                             </td>
                                             <td>
-                                                <a data-toggle="tooltip" title="Click to View Routines"
-                                                   href="{{ route('routine.show', $routine->id)}}">
-                                                    {{ (!empty( $routine->title)) ?  $routine->title : ''}}
-                                                </a>
+												{{ (!empty( $routine->title)) ?  $routine->title : ''}}
                                             </td>
                                             <td>
-                                                {{ (!empty( $routine->description)) ?  $routine->description : ''}}
+                                                {{ (!empty( $routine->content)) ?  $routine->content : ''}}
                                             </td>
 											<td style="text-align: center;">
 												<button type="button" id="view_ribbons" class="btn {{ (!empty($routine->status) && $routine->status == 1) ? " btn-danger " : "btn-success " }}
@@ -126,13 +121,13 @@
                         <!-- /.box-body -->
                         <div class="box-footer">
                             <button type="button" id="cat_module" class="btn btn-default pull-right" data-toggle="modal"
-                                    data-target="#add-routine-modal">Add Goal
+                                    data-target="#add-routine-modal">Add Routine
                             </button>
                         </div>
                     </div>
                 </div>
-                @include('routine.partials.create')
-                @include('routine.partials.edit')
+                @include('routine.partials.create_routine')
+                @include('routine.partials.edit_routine')
             </div>
         </div>
     </div>
@@ -201,9 +196,7 @@
         });
 
         $(function () {
-
             $('table.routine').DataTable({
-
                 paging: true,
                 lengthChange: true,
                 searching: true,
@@ -219,15 +212,14 @@
             //$('.modal').on('show.bs.modal', reposition);
 
             $('#add-routine').on('click', function () {
-                let strUrl = '{{route('store')}}';
+				let strUrl = '/routine/save/{{$goal->id}}';
                 let modalID = 'add-routine-modal';
                 let formName = 'add-routine-form';
 
-                //console.log(formName)
                 let submitBtnID = 'add-routine';
-                let redirectUrl = '{{ route('index') }}';
-                let successMsgTitle = 'Goal Added!';
-                let successMsg = 'Record has been updated successfully.';
+                let redirectUrl = '/routine/show/{{$goal->id}}';
+                let successMsgTitle = 'Routine Added!';
+                let successMsg = 'Record has been added successfully.';
                 modalFormDataSubmit(strUrl, formName, modalID, submitBtnID, redirectUrl, successMsgTitle, successMsg);
             });
 
@@ -237,25 +229,25 @@
                 let btnEdit = $(e.relatedTarget);
                 routineId = btnEdit.data('id');
                 let title = btnEdit.data('title');
-                let description = btnEdit.data('description');
+                let content = btnEdit.data('content');
                 let modal = $(this);
                 modal.find('#title').val(title);
-                modal.find('#description').val(description);
+                modal.find('#content').val(content);
             });
 
             // update modal
             $('#edit-routine').on('click', function () {
 
-                let strUrl = '/routine/goal/update/' + routineId;
+                let strUrl = '/routine/update/' + routineId;
                 let modalID = 'edit-routine-modal';
                 let objData = {
-                    description: $('#'+modalID).find('#description').val(),
+                    content: $('#'+modalID).find('#content').val(),
                     title: $('#'+modalID).find('#title').val(),
                     _token: $('#'+modalID).find('input[name=_token]').val()
                 };
 
                 let submitBtnID = 'edit-routine';
-                let redirectUrl = '{{ route('index') }}';
+                let redirectUrl = '/routine/show/{{$goal->id}}';
                 let successMsgTitle = 'Changes Saved!';
                 let successMsg = 'Record has been updated successfully.';
                 let Method = 'PATCH';
