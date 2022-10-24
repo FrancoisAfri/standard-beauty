@@ -18,9 +18,16 @@ class challengesUsers extends Model
          public function user() {
              return $this->belongsTo(contacts::class, 'contact_id');
          }         
-		 //Relationship contacts and contacts_users
-         public function challenges() {
+		//Relationship contacts and contacts_users
+        public function challenges() {
              return $this->belongsTo(challenges::class, 'challenge_id');
-         }
-    //
+        }
+		// get all challenges
+		public static function getAllUserChallenges($user)
+		{
+			$query = challengesUsers::where('contact_id', $user)
+					->orderBy('challenge_id', 'asc')
+					->with('challenges');
+			return $query->get();
+		}
 }

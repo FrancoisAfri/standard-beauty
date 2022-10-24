@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Mail;
 use App\contacts;
 use App\CustomerSkinProfile;
 use App\contacts_users;
+use App\challenges;
 use App\Mail\ConfirmRegistration;
 use Illuminate\Support\Facades\Hash;
 
@@ -222,6 +223,125 @@ class CustomerManagementController extends Controller
 		Alert::toast('Status changed', 'Status changed Successfully');
 
         AuditReportsController::store('Customer Management', 'Customer Status Changed', "Customer Status Changed By User", 0);
+        return response()->json();
+    }
+	
+	public function challengesActivate(Request $request, $contact)
+    {
+		$contact = contacts::find($contact);
+        $contact->status = !empty($request->status) ? 1 : 0;
+        $contact->update();
+		//update contact user 
+		$contacts_users = contacts_users::find($contact->user_id);
+		$contacts_users->status = !empty($request->status) ? 1 : 0;
+		$contacts_users->update();
+        
+		Alert::toast('Status changed', 'Status changed Successfully');
+
+        AuditReportsController::store('Customer Management', 'Customer Status Changed', "Customer Status Changed By User", 0);
+        return response()->json();
+    }
+	
+	public function challenges(Request $request)
+    {
+        $status = !empty($request['status_id']) ? $request['status_id'] : 1;
+        $challenges = challenges::getChallenges($status);
+		//return $challenges;
+        $data = $this->breadCrump(
+            "Customer Management",
+            "challenges", "fa fa-lock",
+            "Customer Management",
+            "Customer Management",
+            "/challenges",
+            "Customer Management",
+            "Customer Management Search"
+        );
+
+        $data['challenges'] = $challenges;
+        $data['status'] = $status;
+
+        AuditReportsController::store(
+            'Customer Management',
+            'Customer Management Search Page Accessed',
+            "Actioned By User",
+            0
+        );
+
+        return view('contacts.manageClient.view_challenges')->with($data);
+    }
+	// store challenges
+	public function storeChallenges(Request $request)
+    {
+		$this->validate($request, [
+            'title' => 'required',
+            'instructions' => 'required',
+            'date_from' => 'required',
+            'date_to' => 'required',
+			
+        ]);
+		
+		$challengeData = $request->all();
+        unset($challengeData['_token']);
+		//convert dates
+		if (isset($challengeData['date_from'])) {
+            $date_from = $challengeData['date_from'] = str_replace('/', '-', $challengeData['date_from']);
+            $date_from = $challengeData['date_from'] = strtotime($challengeData['date_from']);
+        }
+		if (isset($challengeData['date_to'])) {
+            $date_to = $challengeData['date_to'] = str_replace('/', '-', $challengeData['date_to']);
+            $date_to = $challengeData['date_to'] = strtotime($challengeData['date_to']);
+        }
+
+
+		$challenge = new challenges();
+        $challenge->title = $challengeData['title'];
+        $challenge->instructions = $challengeData['instructions'];
+        $challenge->date_from = $date_from;
+        $challenge->date_to = $date_to;
+        $challenge->status = 1;
+		
+		$challenge->save();
+
+        AuditReportsController::store('Customer Management', 'Challengeb Added', "Accessed By User", 0);;
+        return response()->json();
+    }
+	// update challenge
+	public function updateChallenge(Request $request, challenges $challenge)
+    {
+		$this->validate($request, [
+            'title' => 'required',
+            'instructions' => 'required',
+            'date_from_update' => 'required',
+            'date_to_update' => 'required',
+			
+        ]);
+        //exclude token, method and command fields from query.
+        $challengeData = $request->all();
+        unset($challengeData['_token'], $challengeData['_method'], $challengeData['command']);
+
+        //exclude empty fields from query
+        foreach ($challengeData as $key => $value) {
+            if (empty($challengeData[$key])) {
+                unset($challengeData[$key]);
+            }
+        }
+		//convert dates
+		if (isset($challengeData['date_from_update'])) {
+            $date_from = $challengeData['date_from_update'] = str_replace('/', '-', $challengeData['date_from_update']);
+            $date_from = $challengeData['date_from_update'] = strtotime($challengeData['date_from_update']);
+        }
+		if (isset($challengeData['date_to_update'])) {
+            $date_to = $challengeData['date_to_update'] = str_replace('/', '-', $challengeData['date_to_update']);
+            $date_to = $challengeData['date_to_update'] = strtotime($challengeData['date_to_update']);
+        }
+		//$contact = contacts::find($contact);
+		$challenge->title = $challengeData['title'];
+        $challenge->instructions = $challengeData['instructions'];
+        $challenge->date_from = $date_from;
+        $challenge->date_to = $date_to;
+        $challenge->update();
+        
+        AuditReportsController::store('Customer Management', 'Challenge Details Edited', "Edited By User", 0);;
         return response()->json();
     }
 }

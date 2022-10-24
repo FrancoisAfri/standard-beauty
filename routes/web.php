@@ -243,6 +243,15 @@ Route::group(['prefix' => 'customer', 'namespace' => 'customer', 'middleware' =>
 	Route::get(
         'challenges', 'CustomerManagementController@challenges')
         ->name('customer.challenges');
+	Route::get(
+        'challenges/activate_challenge', 'CustomerManagementController@challengesActivate')
+        ->name('customer.activate_challenge');
+	Route::post(
+        'challenge/store_challenge', 'CustomerManagementController@storeChallenges')
+        ->name('store.challenge');
+	Route::patch(
+        'challenge/update/{challenge}', 'CustomerManagementController@updateChallenge')
+        ->name('update.challenge');
    
 });
 
