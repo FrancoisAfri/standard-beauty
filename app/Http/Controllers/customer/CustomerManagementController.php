@@ -22,6 +22,7 @@ use App\contacts;
 use App\CustomerSkinProfile;
 use App\contacts_users;
 use App\challenges;
+use App\CustomerProgress;
 use App\Mail\ConfirmRegistration;
 use Illuminate\Support\Facades\Hash;
 
@@ -133,7 +134,7 @@ class CustomerManagementController extends Controller
             "Customer Management",
             "Customer Management Search"
         );
-		$contact = $contact->load('medication','skinProfile');
+		$contact = $contact->load('medication','skinProfile','progess');
 
         $data['contact'] = $contact;
 		
@@ -343,5 +344,32 @@ class CustomerManagementController extends Controller
         
         AuditReportsController::store('Customer Management', 'Challenge Details Edited', "Edited By User", 0);;
         return response()->json();
+    }
+	// see challenge
+	public function challengesShow(challenges $challenge)
+    {
+        $challenge = $challenge->load('users.user','progess.user');
+
+		//return $challenge;
+        $data = $this->breadCrump(
+            "Customer Management",
+            "challenges", "fa fa-lock",
+            "Customer Management",
+            "Customer Management",
+            "/challenges",
+            "Customer Management",
+            "Customer Management Search"
+        );
+
+        $data['challenge'] = $challenge;
+
+        AuditReportsController::store(
+            'Customer Management',
+            'Customer Management Search Page Accessed',
+            "Actioned By User",
+            0
+        );
+
+        return view('contacts.manageClient.view_challenge')->with($data);
     }
 }

@@ -37,12 +37,14 @@
                                         <li class="" data-toggle="tooltip" title="Transfers"><a href="#transfares"
                                                                                        data-toggle="tab">Skin profile</a>
                                         </li>
+										<li class="" data-toggle="tooltip" title="progress"><a href="#progress"
+                                                                                       data-toggle="tab">Progress</a>
+                                        </li>
                                         <li class=" pull-right">
                                             <button type="button" class="btn btn-default pull-right" id="back_button"><i
                                                         class="fa fa-arrow-left"></i> Back
                                             </button>
                                         </li>
-
                                     </ul>
                                     <div class="tab-content">
                                         <div class="active tab-pane" id="information">
@@ -50,6 +52,9 @@
                                         </div>
                                         <div class="tab-pane" id="transfares">
 											@include('contacts.Tabs.skin-profile-tab')
+                                        </div>
+										<div class="tab-pane" id="progress">
+											@include('contacts.Tabs.customer-progress-tab')
                                         </div>
                                     </div>
                                     <!-- /.tab-content -->

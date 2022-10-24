@@ -30,6 +30,9 @@ class contacts extends Model
 	public function challengesProgess() {
         return $this->hasMany(challengesProgress::class, 'contact_id');
     }
+	public function progess() {
+        return $this->hasMany(CustomerProgress::class, 'contact_id');
+    }
 	
 	//Relationship contacts and contacts_users
 	public function user() {

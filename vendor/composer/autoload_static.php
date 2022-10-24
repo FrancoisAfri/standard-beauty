@@ -469,6 +469,7 @@ class ComposerStaticInit7e0126a394f3633e91ac48c3b7592e0b
         'CreateContactsTable' => __DIR__ . '/../..' . '/database/migrations/2022_09_07_172446_create_contacts_table.php',
         'CreateContactsUsersTable' => __DIR__ . '/../..' . '/database/migrations/2022_09_07_180150_create_contacts_users_table.php',
         'CreateCountriesTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_19_164626_create_countries_table.php',
+        'CreateCustomerProgressesTable' => __DIR__ . '/../..' . '/database/migrations/2022_10_24_183412_create_customer_progresses_table.php',
         'CreateCustomerSkinProfilesTable' => __DIR__ . '/../..' . '/database/migrations/2022_10_03_165843_create_customer_skin_profiles_table.php',
         'CreateDivisionLevelFivesTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_01_123500_create_division_level_fives_table.php',
         'CreateDivisionLevelFoursTable' => __DIR__ . '/../..' . '/database/migrations/2017_03_01_123546_create_division_level_fours_table.php',

@@ -81,7 +81,7 @@
                                             </td>
                                             <td>
                                                 <a data-toggle="tooltip" title="Click to View Challenge"
-                                                   href="{{ route('customer.show', $challenge->id)}}">
+                                                   href="{{ route('challenge.show', $challenge->id)}}">
                                                     {{ (!empty( $challenge->title)) ?  $challenge->title : ''}}
                                                 </a>
                                             </td>
