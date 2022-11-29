@@ -18,12 +18,18 @@ class Routines extends Model
 	public function goal() {
         return $this->belongsTo(Goals::class, 'goal_id');
     }
+	// relationship between routine and link 
+	public function routineLink() {
+		return $this->hasMany(RoutineLink::class, 'routine_id');
+    }
+	
 	// get all routine
 	public static function getAllRoutines($status = 1, $goalID)
     {
 		$query = Routines::
 				where('status', $status)
 				->where('goal_id',$goalID)
+				->with('routineLink')
 				->orderBy('title', 'asc');
         return $query->get();
     }

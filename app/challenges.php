@@ -11,7 +11,7 @@ class challenges extends Model
     
          // Mass assignable fields
          protected $fillable = [
-             'title', 'instructions', 'date_from', 'date_to', 'status'        
+             'title', 'instructions', 'date_from', 'date_to', 'status' , 'youtube_link' , 'picture'        
          ];
          
          public function progess() {

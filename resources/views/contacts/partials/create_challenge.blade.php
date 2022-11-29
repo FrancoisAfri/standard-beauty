@@ -24,6 +24,20 @@
 							<textarea class="form-control" id="instructions" name="instructions" placeholder="Enter Instructions"required></textarea>
                         </div>
                     </div>
+					<div class="form-group">
+                        <label for="youtube_link" class="col-sm-2 control-label"> Youtube Link</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="youtube_link" name="youtube_link" value=""
+                                   placeholder="Enter Link" required>
+                        </div>
+                    </div>
+					 <div class="form-group">
+                        <label for="picture" class="col-sm-2 control-label"> Picture</label>
+                        <div class="col-sm-8">
+                            <input type="file" id="picture" name="picture" class="file file-loading"
+                                   data-allowed-file-extensions='["jpg", "jpeg", "png"]' data-show-upload="false" required>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="date_from" class="col-sm-2 control-label">Date From</label>
                         <div class="col-sm-8">

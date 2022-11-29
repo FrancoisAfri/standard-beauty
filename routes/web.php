@@ -267,6 +267,12 @@ Route::group(['prefix' => 'routine', 'namespace' => 'routine', 'middleware' => [
 	Route::post(
         'save/{goal}', 'RoutineBuilderController@saveRoutine')
         ->name('routine.save');
+	Route::post(
+        'save_setup/{setup}', 'RoutineBuilderController@saveSetup')
+        ->name('routine_setup.save');
+	Route::post(
+        'save_setup', 'RoutineBuilderController@saveSetup')
+        ->name('routine_setup.save');
     Route::get('search', 'RoutineBuilderController@index')
         ->name('routine.search');
 	Route::get(
@@ -283,6 +289,8 @@ Route::group(['prefix' => 'routine', 'namespace' => 'routine', 'middleware' => [
         ->name('routine.destroy');
 	Route::get('show/{goal}', 'RoutineBuilderController@show')
         ->name('routine.show');
+	Route::get('setup', 'RoutineBuilderController@setup')
+        ->name('routine.setup');
 	Route::patch('goal/update/{goal}', 'RoutineBuilderController@update')
         ->name('routine.goal.update');
 	Route::patch('update/{routine}', 'RoutineBuilderController@updateRoutine')

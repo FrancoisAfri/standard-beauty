@@ -200,7 +200,10 @@ class DatabaseSeeder extends Seeder
             'year' => 2014,
             'name' => 'Voting Day',
         ]);
-
+		// routine setup
+        DB::table('routine_setups')->insert([
+            'document_root' => 'test',
+        ]);
         //insert the employees group levels (division departments)
         $groupLevel = new DivisionLevel();
         $groupLevel->level = 1;

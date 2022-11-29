@@ -278,6 +278,7 @@ class CustomerManagementController extends Controller
             'instructions' => 'required',
             'date_from' => 'required',
             'date_to' => 'required',
+            'youtube_link' => 'required',
 			
         ]);
 		
@@ -297,12 +298,14 @@ class CustomerManagementController extends Controller
 		$challenge = new challenges();
         $challenge->title = $challengeData['title'];
         $challenge->instructions = $challengeData['instructions'];
+        $challenge->youtube_link = $challengeData['youtube_link'];
         $challenge->date_from = $date_from;
         $challenge->date_to = $date_to;
         $challenge->status = 1;
 		
 		$challenge->save();
-
+		// save picture 
+        $this->verifyAndStoreImage('customer/challenge', 'picture', $challenge, $request);
         AuditReportsController::store('Customer Management', 'Challengeb Added', "Accessed By User", 0);;
         return response()->json();
     }
@@ -314,6 +317,7 @@ class CustomerManagementController extends Controller
             'instructions' => 'required',
             'date_from_update' => 'required',
             'date_to_update' => 'required',
+            'youtube_link' => 'required',
 			
         ]);
         //exclude token, method and command fields from query.
@@ -340,8 +344,10 @@ class CustomerManagementController extends Controller
         $challenge->instructions = $challengeData['instructions'];
         $challenge->date_from = $date_from;
         $challenge->date_to = $date_to;
+        $challenge->date_to = $challengeData['youtube_link'];
         $challenge->update();
-        
+        // save picture 
+        $this->verifyAndStoreImage('customer/challenge', 'picture', $challenge, $request);
         AuditReportsController::store('Customer Management', 'Challenge Details Edited', "Edited By User", 0);;
         return response()->json();
     }

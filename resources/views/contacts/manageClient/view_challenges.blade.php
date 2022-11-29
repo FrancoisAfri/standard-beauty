@@ -56,6 +56,8 @@
                                 <th style="width: 10px; text-align: center;"></th>
                                 <th>Title</th>
                                 <th>Instructions</th>
+                                <th>Youtube Link</th>
+                                <th>Picture</th>
                                 <th style="width: 5px; text-align: center;">Date From</th>
                                 <th style="width: 5px; text-align: center;">Date To</th>
                                 <th style="text-align: center;">Status</th>
@@ -74,6 +76,7 @@
                                                         data-id="{{ $challenge->id }}"
                                                         data-title="{{ $challenge->title }}"
                                                         data-instructions="{{$challenge->instructions}}"
+                                                        data-youtube_link="{{$challenge->youtube_link}}"
                                                         data-date_from="{{ date(' d M Y', $challenge->date_from)}}"
                                                         data-date_to="{{ date(' d M Y', $challenge->date_to)}}"
 														<i class="fa fa-pencil-square-o"></i> Edit
@@ -86,24 +89,21 @@
                                                 </a>
                                             </td>
                                             <td>{{ (!empty( $challenge->instructions)) ?  $challenge->instructions : ''}}</td>
+                                            <td>{{ (!empty( $challenge->youtube_link)) ?  $challenge->youtube_link : ''}}</td>
+                                            <td>@if(!empty($challenge->picture))
+													<div class="popup-thumbnail img-responsive">
+														<img src="{{ asset('storage/customer/challenge/'.$challenge->picture) }} "
+															 height="35px" width="40px" alt="Challenge image">
+													</div>
+												@else
+													<a class="btn btn-default pull-centre btn-xs"><i class="fa fa-exclamation-triangle"></i> Nothing Uploaded</a>
+												@endif</td>
                                             <td>{{ (!empty( $challenge->date_from)) ?  date(' d M Y', $challenge->date_from) : ''}} </td>
                                             <td>{{ (!empty( $challenge->date_to)) ?  date(' d M Y', $challenge->date_to) : ''}} </td>
                                             <td style="text-align: center;">
                                                 <span class="label label-info">{{ (!empty( $challenge->status) && $challenge->status == 1 ) ?  'Active' : 'Inactive'}}</span>
                                             </td>
                                             <td>
-                                                <!-- <form action="{{ route('customer.destroy', $challenge->id) }}"
-                                                      method="POST"
-                                                      style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                                                    <button type="submit"
-                                                            class="btn btn-xs btn-danger btn-flat delete_confirm"
-                                                            data-toggle="tooltip" title='Delete'>
-                                                        <i class="fa fa-trash"> Delete </i>
-                                                    </button>
-                                                </form> -->
                                             </td>
                                         </tr>
                                 @endforeach
@@ -114,6 +114,8 @@
                                 <th style="width: 10px; text-align: center;"></th>
                                 <th>Title</th>
                                 <th>Instructions</th>
+								<th>Youtube Link</th>
+                                <th>Picture</th>
                                 <th style="width: 5px; text-align: center;">Date From</th>
                                 <th style="width: 5px; text-align: center;">Date To</th>
                                 <th style="text-align: center;">Status</th>
@@ -271,11 +273,13 @@
                 challengeId = btnEdit.data('id');
                 let title = btnEdit.data('title');
                 let instructions = btnEdit.data('instructions');
+                let youtube_link = btnEdit.data('youtube_link');
                 let date_from = btnEdit.data('date_from');
                 let date_to = btnEdit.data('date_to');
                 let modal = $(this);
                 modal.find('#title').val(title);
                 modal.find('#instructions').val(instructions);
+                modal.find('#youtube_link').val(youtube_link);
                 modal.find('#date_from_update').val(date_from);
                 modal.find('#date_to_update').val(date_to);
             });

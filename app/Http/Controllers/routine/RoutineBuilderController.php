@@ -18,6 +18,8 @@ use Yajra\Datatables\Facades\Datatables;
 use Illuminate\Support\Facades\Mail;
 use App\Goals;
 use App\Routines;
+use App\RoutineLink;
+use App\RoutineSetup;
 use App\Mail\ConfirmRegistration;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -100,6 +102,39 @@ class RoutineBuilderController extends Controller
         $routine->status = 1;
         $routine->goal_id = $goal->id;
 		$routine->save();
+		
+		# pictures
+		// setup
+		$setup = RoutineSetup::whereNotNull('document_root')->first();
+        $numFiles = $index = 0;
+        $totalFiles = !empty($request['total_files']) ? $request['total_files'] : 0;
+        $Extensions = array('png', 'jpg');
+
+        $Files = isset($_FILES['picture']) ? $_FILES['picture'] : array();
+        while ($numFiles != $totalFiles) {
+            $index++;
+            $hyper_link = $request->hyper_link[$index];
+            if (isset($Files['name'][$index]) && $Files['name'][$index] != '') {
+                $fileName = $routine->id . '_' . $Files['name'][$index];
+                $Explode = array();
+                $Explode = explode('.', $fileName);
+                $ext = end($Explode);
+                $ext = strtolower($ext);
+                if (in_array($ext, $Extensions)) {
+                    if (!is_dir("$setup->document_root")) mkdir("$setup->document_root", 0775);
+                    move_uploaded_file($Files['tmp_name'][$index], "$setup->document_root".'/' . $fileName) or die('Could not move file!');
+
+                    $RoutineLink = new RoutineLink();
+                    $RoutineLink->routine_id = $routine->id;
+                    $RoutineLink->hyper_link = $hyper_link;
+                    $RoutineLink->picture = $fileName;
+                    $RoutineLink->status = 1;
+                    $RoutineLink->save();
+                }
+            }
+            $numFiles++;
+        }
+		
         AuditReportsController::store('Routine Builder Management', 'Routine Added', "Added By User", 0);;
         return response()->json();
     }
@@ -235,5 +270,35 @@ class RoutineBuilderController extends Controller
 
         AuditReportsController::store('Routine Builder Management', 'Routine Builder Status Changed', " Changed By User", 0);
         return redirect()->route('routine.show',$routine->goal_id)->with('status', 'Goal Status Changed!');
+    }
+	// setup
+	public function setup()
+    {
+		
+		$setup = RoutineSetup::whereNotNull('document_root')->first();
+
+        $data = $this->breadCrump(
+            "Routine Builder Management",
+            "Setup", "fa fa-lock",
+            "Routine Builder Management",
+            "Routine Builder Management",
+            "routine/setup",
+            "Routine Builder Management",
+            "View Routine"
+        );
+		$data['setup'] = $setup;
+		AuditReportsController::store('Routine Builder Management', 'Setup Page accessed', "Accessed By User", 0);
+		return view('routine.manage.setup')->with($data);
+    }
+	// save setup
+	public function saveSetup(Request $request,RoutineSetup $setup)
+    {
+		$config = $request->all();
+        unset($config['_token']);
+		$setup->document_root = !empty($config['document_root']) ? $config['document_root'] : '';
+        $setup->update();
+
+		AuditReportsController::store('Routine Builder Management', 'Setup Saved', "Saved By User", 0);
+		return redirect()->route('routine.setup')->with('status', 'Setup Saved !');
     }
 }

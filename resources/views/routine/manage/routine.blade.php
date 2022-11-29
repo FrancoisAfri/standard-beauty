@@ -60,6 +60,7 @@
                                 <th style="width: 10px; text-align: center;"></th>
                                 <th>Title</th>
                                 <th>Content</th>
+                                <th>Pictures</th>
                                 <th style="text-align: center;">Status</th>
                                 <th style="width: 5px; text-align: center;"></th>
                             </tr>
@@ -84,6 +85,17 @@
                                             </td>
                                             <td>
                                                 {{ (!empty( $routine->content)) ?  $routine->content : ''}}
+                                            </td>
+											<td>
+												@if(!empty($routine->routineLink))
+													@foreach ($routine->routineLink as $link)
+													<a href="{{$link->hyper_link}}" target="_blank"><img src="{{ asset('storage/routine-pics/'.$link->picture) }} "
+                                                         height="70px" width="80px" alt="Link image"></a>
+													
+													@endforeach
+												@else
+													<a class="btn btn-default pull-centre btn-xs"><i class="fa fa-exclamation-triangle"></i> Nothing Uploaded</a>
+												@endif
                                             </td>
 											<td style="text-align: center;">
 												<button type="button" id="view_ribbons" class="btn {{ (!empty($routine->status) && $routine->status == 1) ? " btn-danger " : "btn-success " }}
@@ -255,5 +267,45 @@
             });
 
         });
+		function clone(id, file_index, child_id) {
+			var clone = document.getElementById(id).cloneNode(true);
+			clone.setAttribute("id", file_index);
+			clone.setAttribute("name", file_index);
+			clone.style.display = "table-row";
+			clone.querySelector('#' + child_id).setAttribute("name", child_id + '[' + file_index + ']');
+			clone.querySelector('#' + child_id).disabled = false;
+			clone.querySelector('#' + child_id).setAttribute("id", child_id + '[' + file_index + ']');
+			return clone;
+		}
+		function addFile() {
+			var table = document.getElementById("tab_tab");
+			var file_index = document.getElementById("file_index");
+			file_index.value = ++file_index.value;
+			var file_clone = clone("file_row", file_index.value, "picture");
+			var name_clone = clone("name_row", file_index.value, "hyper_link");
+			var final_row = document.getElementById("final_row").cloneNode(false);
+			table.appendChild(file_clone);
+			table.appendChild(name_clone);
+			table.appendChild(final_row);
+			var total_files = document.getElementById("total_files");
+			total_files.value = ++total_files.value;
+			//change the following using jquery if necessary
+			var remove = document.getElementsByName("remove");
+			for (var i = 0; i < remove.length; i++)
+				remove[i].style.display = "inline";
+		}
+		
+		function removeFile(row_name)
+		{
+			var row=row_name.parentNode.parentNode.id;
+			var rows=document.getElementsByName(row);
+			while(rows.length>0)
+				rows[0].parentNode.removeChild(rows[0]);
+			var total_files = document.getElementById("total_files");
+			total_files.value=--total_files.value;
+			var remove=document.getElementsByName("remove");
+			if(total_files.value == 1)
+				remove[1].style.display='none';
+		}
     </script>
 @stop
