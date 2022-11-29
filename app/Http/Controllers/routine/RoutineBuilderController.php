@@ -276,7 +276,12 @@ class RoutineBuilderController extends Controller
     {
 		
 		$setup = RoutineSetup::whereNotNull('document_root')->first();
-
+		if (empty($setup)) 
+		{
+			$routine = new RoutineSetup();
+			$routine->document_root = 'test';
+			$routine->save();
+		}
         $data = $this->breadCrump(
             "Routine Builder Management",
             "Setup", "fa fa-lock",

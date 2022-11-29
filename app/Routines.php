@@ -22,7 +22,7 @@ class Routines extends Model
 	public function routineLink() {
 		return $this->hasMany(RoutineLink::class, 'routine_id');
     }
-	
+
 	// get all routine
 	public static function getAllRoutines($status = 1, $goalID)
     {
