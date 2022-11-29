@@ -20,6 +20,7 @@ use App\Goals;
 use App\Routines;
 use App\RoutineLink;
 use App\RoutineSetup;
+use App\Affirmations;
 use App\Mail\ConfirmRegistration;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -305,5 +306,81 @@ class RoutineBuilderController extends Controller
 
 		AuditReportsController::store('Routine Builder Management', 'Setup Saved', "Saved By User", 0);
 		return redirect()->route('routine.setup')->with('status', 'Setup Saved !');
+    }
+	// affirmation
+	public function affirmation(Request $request)
+    {
+        $status = !empty($request['status_id']) ? $request['status_id'] : 1;
+        $affirmations = Affirmations::getAffirmations($status);
+
+        $data = $this->breadCrump(
+            "Routine Builder Management",
+            "Affirmation", "fa fa-lock",
+            "Routine Builder Management",
+            "Routine Builder Management",
+            "routine/search",
+            "Routine Builder Management",
+            "Routine Builder Management Search"
+        );
+
+        $data['affirmations'] = $affirmations;
+        $data['status'] = $status;
+
+        AuditReportsController::store(
+            'Routine Builder Management',
+            'Affirmations Page Accessed',
+            "Actioned By User",
+            0
+        );
+        return view('routine.manage.view_affirmations')->with($data);
+    }
+	/// save affirmation
+	// save routine
+	public function saveAffirmation (Request $request)
+    {
+        $this->validate($request, [
+            'affirmation' => 'required',
+        ]);
+		
+		$Affirmations = new Affirmations($request->all());
+        $Affirmations->status = 1;
+		$Affirmations->save();
+		
+        AuditReportsController::store('Routine Builder Management', 'Affirmation Added', "Added By User", 0);;
+        return response()->json();
+    }
+	// update affirmation
+		// update routine
+	public function updateAffirmation(Request $request, Affirmations $affirmation)
+    {
+		$this->validate($request, [
+            'affirmation' => 'required',
+        ]);
+		
+		$affirmation->update($request->all());
+
+        Alert::toast('Record Updated Successfully ', 'success');
+
+        AuditReportsController::store('Routine Builder Management', 'Affirmations Details Edited', "Edited By User", 0);
+        return response()->json();
+    }
+	//delete
+	public function destroyaffirmation(Affirmations $affirmation)
+    {
+        $affirmation->delete();
+		AuditReportsController::store('Routine Builder Management', 'Affirmation Deleted', "Deleted By User", 0);;
+        return redirect()->route('routine.affirmation')->with('status', 'Goal Deleted!');
+    }
+	
+	// activate and deactivate affirmation
+	public function activateAffirmation(Affirmations $affirmation)
+    {
+		$affirmation->status = !empty($affirmation->status) && $affirmation->status == 2 ? 1 : 2;
+		$affirmation->update();
+		
+		Alert::toast('Status changed', 'Status changed Successfully');
+
+        AuditReportsController::store('Routine Builder Management', 'Affirmation Status Changed', " Changed By User", 0);
+        return redirect()->route('routine.affirmation')->with('status', 'Goal Status Changed!');
     }
 }

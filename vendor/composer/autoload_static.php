@@ -460,6 +460,7 @@ class ComposerStaticInit7e0126a394f3633e91ac48c3b7592e0b
         'ChangeCollumnToAuditTable' => __DIR__ . '/../..' . '/database/migrations/2018_02_16_233928_change_collumn_to_auditTable.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'CreateAddCategoryIdToHrPositionTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_23_151227_create_add_category_id_to_hr_position_table.php',
+        'CreateAffirmationsTable' => __DIR__ . '/../..' . '/database/migrations/2022_11_29_084331_create_affirmations_table.php',
         'CreateAuditTrackTable' => __DIR__ . '/../..' . '/database/migrations/2016_09_07_193253_create_audit_track_table.php',
         'CreateChallengesProgressesTable' => __DIR__ . '/../..' . '/database/migrations/2022_10_06_190833_create_challenges_progresses_table.php',
         'CreateChallengesTable' => __DIR__ . '/../..' . '/database/migrations/2022_10_06_184744_create_challenges_table.php',

@@ -295,4 +295,17 @@ Route::group(['prefix' => 'routine', 'namespace' => 'routine', 'middleware' => [
         ->name('routine.goal.update');
 	Route::patch('update/{routine}', 'RoutineBuilderController@updateRoutine')
         ->name('routine.update');
+	Route::get('affirmation', 'RoutineBuilderController@affirmation')
+        ->name('routine.affirmation');
+	Route::post(
+        'save_affirmation', 'RoutineBuilderController@saveAffirmation')
+        ->name('store.affirmation');
+	Route::patch('affirmation/update/{affirmation}', 'RoutineBuilderController@updateAffirmation')
+        ->name('affirmation.update');
+	Route::delete(
+        'affirmation/destroy/{affirmation}', 'RoutineBuilderController@destroyaffirmation')
+        ->name('routine.affirmation.destroy');
+	Route::get(
+        'act/affirmation/{affirmation}', 'RoutineBuilderController@activateAffirmation')
+        ->name('routine.affirmation.activate');
 });

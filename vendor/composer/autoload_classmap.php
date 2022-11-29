@@ -35,6 +35,7 @@ return array(
     'ChangeCollumnToAuditTable' => $baseDir . '/database/migrations/2018_02_16_233928_change_collumn_to_auditTable.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'CreateAddCategoryIdToHrPositionTable' => $baseDir . '/database/migrations/2017_02_23_151227_create_add_category_id_to_hr_position_table.php',
+    'CreateAffirmationsTable' => $baseDir . '/database/migrations/2022_11_29_084331_create_affirmations_table.php',
     'CreateAuditTrackTable' => $baseDir . '/database/migrations/2016_09_07_193253_create_audit_track_table.php',
     'CreateChallengesProgressesTable' => $baseDir . '/database/migrations/2022_10_06_190833_create_challenges_progresses_table.php',
     'CreateChallengesTable' => $baseDir . '/database/migrations/2022_10_06_184744_create_challenges_table.php',
