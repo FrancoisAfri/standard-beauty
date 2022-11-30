@@ -8,6 +8,7 @@ use App\HRPerson;
 use App\User;
 use App\cms_rating;
 use App\DivisionLevel;
+use App\CompanyIdentity;
 use App\YoutubePost;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AuditReportsController;
@@ -112,9 +113,29 @@ class CmsController extends Controller
         $crmNews->expirydate = $Expdate;
         $crmNews->status = 1;
         $crmNews->save();
+		// save picture
+		// get path 
+		$CompanyIdentity = CompanyIdentity::first();
+		$path = !empty($CompanyIdentity->document_root) ? $CompanyIdentity->document_root : '';
+		$path = $path."/CMS/images";
+		$Extensions = array('png', 'jpg');
 
-        //Upload Image picture
-        if ($request->hasFile('image')) {
+        $Files = isset($_FILES['image']) ? $_FILES['image'] : array();
+		if (isset($Files['name']) && $Files['name'] != '') {
+			$fileName = time(). '_' . $Files['name'];
+			$Explode = array();
+			$Explode = explode('.', $fileName);
+			$ext = end($Explode);
+			$ext = strtolower($ext);
+			if (in_array($ext, $Extensions)) {
+				if (!is_dir("$path")) mkdir("$path", 0775);
+				move_uploaded_file($Files['tmp_name'], "$path".'/' . $fileName) or die('Could not move file!');
+				$crmNews->image = $fileName;
+                $crmNews->update();
+			}
+		}
+		
+        /*if ($request->hasFile('image')) {
             $fileExt = $request->file('image')->extension();
             if (in_array($fileExt, ['jpg', 'jpeg', 'png']) && $request->file('image')->isValid()) {
                 $fileName = time() . "image." . $fileExt;
@@ -123,7 +144,7 @@ class CmsController extends Controller
                 $crmNews->image = $fileName;
                 $crmNews->update();
             }
-        }
+        }*/
 
         AuditReportsController::store('Content Management', 'Content Added', "Content Content Management Accessed", 0);
         return response()->json();
@@ -195,8 +216,28 @@ class CmsController extends Controller
         $news->link = $NewsData['link'];
         $news->expirydate = $Expdate;
         $news->update();
+		// get path 
+		$CompanyIdentity = CompanyIdentity::first();
+		$path = !empty($CompanyIdentity->document_root) ? $CompanyIdentity->document_root : '';
+		$path = $path."/CMS/images";
+		$Extensions = array('png', 'jpg');
 
-        if ($request->hasFile('image')) {
+        $Files = isset($_FILES['image']) ? $_FILES['image'] : array();
+		if (isset($Files['name']) && $Files['name'] != '') {
+			$fileName = time(). '_' . $Files['name'];
+			$Explode = array();
+			$Explode = explode('.', $fileName);
+			$ext = end($Explode);
+			$ext = strtolower($ext);
+			if (in_array($ext, $Extensions)) {
+				if (!is_dir("$path")) mkdir("$path", 0775);
+				move_uploaded_file($Files['tmp_name'], "$path".'/' . $fileName) or die('Could not move file!');
+				$news->image = $fileName;
+                $news->update();
+			}
+		}
+		
+        /*if ($request->hasFile('image')) {
             $fileExt = $request->file('image')->extension();
             if (in_array($fileExt, ['jpg', 'jpeg', 'png']) && $request->file('image')->isValid()) {
                 $fileName = time() . "image." . $fileExt;
@@ -205,7 +246,7 @@ class CmsController extends Controller
                 $news->image = $fileName;
                 $news->update();
             }
-        }
+        }*/
 
         AuditReportsController::store('Content Management', 'Content Updated', "Content Content Management Accessed", 0);
         return redirect('/cms/viewnews/' . $news->id)->with('success_application', "Content Update successfully.");
