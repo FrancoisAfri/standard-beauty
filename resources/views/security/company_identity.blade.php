@@ -280,6 +280,24 @@
                                 <input type="file" id="brought_to_text_image" name="brought_to_text_image" class="file file-loading" data-allowed-file-extensions='["jpg", "jpeg", "png"]' data-show-upload="false">
                             </div>
                         </div>
+						<div class="form-group{{ $errors->has('brought_to_text_image') ? ' has-error' : '' }}">
+                            <label for="brought_to_text_image" class="col-sm-2 control-label">Advert Image</label>
+
+                            @if( $companyDetails && !empty($companyDetails->brought_to_text_image_url) )
+                                <div class="col-sm-5" style="margin-bottom: 10px;">
+                                    <img src="{{ $companyDetails->brought_to_text_image_url }}" class="img-responsive img-thumbnail" style="max-height: 200px;">
+                                </div>
+                            @endif
+                            <div class="{{ ($companyDetails && !empty($companyDetails->brought_to_text_image_url)) ? 'col-sm-5' : 'col-sm-10' }}">
+                                <input type="file" id="brought_to_text_image" name="brought_to_text_image" class="file file-loading" data-allowed-file-extensions='["jpg", "jpeg", "png"]' data-show-upload="false">
+                            </div>
+                        </div>
+						<div class="form-group{{ $errors->has('document_root') ? ' has-error' : '' }}">
+                            <label for="document_root" class="col-sm-2 control-label">Document Root</label>
+                            <div class="{{ ($companyDetails && !empty($companyDetails->document_root)) ? 'col-sm-5' : 'col-sm-10' }}">
+								<input type="text" class="form-control" id="document_root" name="document_root" value="{{ ($companyDetails) ? $companyDetails->document_root : '' }}" placeholder="Enter Document Root">
+                            </div>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">

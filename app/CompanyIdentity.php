@@ -17,7 +17,7 @@ class CompanyIdentity extends Model
 		, 'header_acronym_bold','header_acronym_regular', 'company_logo'
 		, 'sys_theme_color', 'mailing_name', 'mailing_address', 'support_email'
 		,'company_website','password_expiring_month','system_background_image'
-		,'brought_to_text','brought_to_text_image','is_demo'
+		,'brought_to_text','brought_to_text_image','is_demo','document_root'
     ];
 
     /**

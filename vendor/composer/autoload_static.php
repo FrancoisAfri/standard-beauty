@@ -442,6 +442,7 @@ class ComposerStaticInit7e0126a394f3633e91ac48c3b7592e0b
         'AddDateLeftToHrPeopleTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_04_073540_add_date_left_to_hr_people_table.php',
         'AddFieldToAuditTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_30_131809_add_field_to_audit_table.php',
         'AddFieldsToChallengesTable' => __DIR__ . '/../..' . '/database/migrations/2022_11_29_013002_add_fields_to_challenges_table.php',
+        'AddFieldsToCompaniesIdentitiesTable' => __DIR__ . '/../..' . '/database/migrations/2022_11_29_220412_add_fields_to_companies_identities_table.php',
         'AddFieldsToCompanyIdentitiesTable' => __DIR__ . '/../..' . '/database/migrations/2020_06_26_141117_add_fields_to_company_identities_table.php',
         'AddFieldsToHrPeopleTable' => __DIR__ . '/../..' . '/database/migrations/2020_06_03_164412_add_fields_to_hr_people_table.php',
         'AddGroupLevelIdsToHrPeopleTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_23_151518_add_group_level_ids_to_hr_people_table.php',
