@@ -230,6 +230,9 @@ Route::group(['prefix' => 'customer', 'namespace' => 'customer', 'middleware' =>
     Route::get(
         'search', 'CustomerManagementController@index')
         ->name('customer.search');
+	Route::post(
+        'store', 'CustomerManagementController@store')
+        ->name('customer.store');
 	Route::patch(
         'act/{contact}', 'CustomerManagementController@activate')
         ->name('customer.activate');

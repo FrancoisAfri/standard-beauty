@@ -28,8 +28,7 @@
                                     <td>{{ $progess->comment}}</td>
                                     <td>{{ $progess->created_at}}</td>
 									<td>
-
-                                        <img src="{{ asset('storage/challenge/progress/'.($progess->picture ?? '') ) }} "
+                                        <img src="{{ asset('storage/challenges/progress/'.($progess->picture ?? '') ) }} "
                                              height="35px" width="40px" alt=" ">
                                     </td>
                                     <td>

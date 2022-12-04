@@ -132,7 +132,7 @@ class CustomerManagementController extends Controller
         //$this->verifyAndStoreImage('customer/images', 'picture', $person, $request);
 
 		//Send email to client
-	    Mail::to($contacts_users->email)->send(new ConfirmRegistration($contacts_users, $generatedPassword));
+	    //Mail::to($contacts_users->email)->send(new ConfirmRegistration($contacts_users, $generatedPassword));
 
         AuditReportsController::store('Customer Management', 'Customer Added', "Accessed By User", 0);;
         return response()->json();
@@ -155,7 +155,7 @@ class CustomerManagementController extends Controller
             "Customer Management",
             "Customer Management Search"
         );
-		$contact = $contact->load('medication','skinProfile','progess');
+		$contact = $contact->load('medication','skinProfile','progess','review');
 
         $data['contact'] = $contact;
 		

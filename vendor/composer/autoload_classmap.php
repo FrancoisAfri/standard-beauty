@@ -62,6 +62,7 @@ return array(
     'CreateHrPositionsTable' => $baseDir . '/database/migrations/2016_09_28_111231_create_hr_positions_table.php',
     'CreateMaritalStatusesTable' => $baseDir . '/database/migrations/2016_09_19_171817_create_marital_statuses_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+    'CreateProductsReviewsTable' => $baseDir . '/database/migrations/2022_12_03_210228_create_products_reviews_table.php',
     'CreateProvincesTable' => $baseDir . '/database/migrations/2016_09_19_164657_create_provinces_table.php',
     'CreateRoutineLinkTable' => $baseDir . '/database/migrations/2022_11_28_162808_create_routine_link_table.php',
     'CreateRoutineSetupsTable' => $baseDir . '/database/migrations/2022_11_28_173527_create_routine_setups_table.php',

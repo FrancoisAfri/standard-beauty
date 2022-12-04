@@ -226,15 +226,15 @@
             //$('.modal').on('show.bs.modal', reposition);
 
             $('#add-client').on('click', function () {
-                let strUrl = '{{route('store')}}';
+                let strUrl = '{{route('customer.store')}}';
                 let modalID = 'add-client-modal';
                 let formName = 'add-client-form';
 
                 //console.log(formName)
                 let submitBtnID = 'add-client';
-                let redirectUrl = '{{ route('index') }}';
+                let redirectUrl = '{{ route('customer.search') }}';
                 let successMsgTitle = 'Client Added!';
-                let successMsg = 'Record has been updated successfully.';
+                let successMsg = 'Record has been added successfully.';
                 modalFormDataSubmit(strUrl, formName, modalID, submitBtnID, redirectUrl, successMsgTitle, successMsg);
             });
 
@@ -272,7 +272,7 @@
                 };
 
                 let submitBtnID = 'edit-client';
-                let redirectUrl = '{{ route('index') }}';
+                let redirectUrl = '{{ route('customer.search') }}';
                 let successMsgTitle = 'Changes Saved!';
                 let successMsg = 'Record has been updated successfully.';
                 let Method = 'PATCH';

@@ -40,6 +40,9 @@
 										<li class="" data-toggle="tooltip" title="progress"><a href="#progress"
                                                                                        data-toggle="tab">Progress</a>
                                         </li>
+										<li class="" data-toggle="tooltip" title="review"><a href="#review"
+                                                                                       data-toggle="tab">Review</a>
+                                        </li>
                                         <li class=" pull-right">
                                             <button type="button" class="btn btn-default pull-right" id="back_button"><i
                                                         class="fa fa-arrow-left"></i> Back
@@ -55,6 +58,9 @@
                                         </div>
 										<div class="tab-pane" id="progress">
 											@include('contacts.Tabs.customer-progress-tab')
+                                        </div>
+										<div class="tab-pane" id="review">
+											@include('contacts.Tabs.customer-review-tab')
                                         </div>
                                     </div>
                                     <!-- /.tab-content -->
@@ -88,17 +94,7 @@
     <script src="{{ asset('plugins/datepicker/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('plugins/fine-uploader/fine-uploader.js') }}"></script>
     <script src="/custom_components/js/deleteAlert.js"></script>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 
-    <script src="{{ asset('custom_components/js/dataTable.js') }}"></script>
 
     <script>
         $(function () {
@@ -111,20 +107,6 @@
             $('#back_button').click(function () {
                 location.href = '{{route('index')}}';
             });
-
-            $('table.files').DataTable({
-
-                paging: true,
-                lengthChange: true,
-                searching: true,
-                ordering: true,
-                info: true,
-                autoWidth: true,
-            });
-
-
-            // reposition modal
-            $('.modal').on('show.bs.modal', reposition);
 
             //Initialize iCheck/iRadio Elements
             $('input').iCheck({
@@ -140,11 +122,7 @@
                 todayHighlight: true
             }).datepicker("setDate", 'now');
 
-            // auto hide field elements
-            hideFields();
-            $('#rdo_store, #rdo_user').on('ifChecked', function () {
-                hideFields();
-            });
+
 
             $('.delete_confirm').click(function (event) {
 
