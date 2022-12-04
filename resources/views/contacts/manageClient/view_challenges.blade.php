@@ -65,49 +65,48 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if (!empty($challenges))
-                                <ul class="products-list product-list-in-box">
-                                    @foreach ($challenges as $key => $challenge)
-                                        <tr id="categories-list">
-                                            <td nowrap>
-                                                <button vehice="button" id="edit_licence"
-                                                        class="btn btn-warning  btn-xs"
-                                                        data-toggle="modal" data-target="#edit-challenge-modal"
-                                                        data-id="{{ $challenge->id }}"
-                                                        data-title="{{ $challenge->title }}"
-                                                        data-instructions="{{$challenge->instructions}}"
-                                                        data-youtube_link="{{$challenge->youtube_link}}"
-                                                        data-date_from="{{ date(' d M Y', $challenge->date_from)}}"
-                                                        data-date_to="{{ date(' d M Y', $challenge->date_to)}}"
-														<i class="fa fa-pencil-square-o"></i> Edit
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <a data-toggle="tooltip" title="Click to View Challenge"
-                                                   href="{{ route('challenge.show', $challenge->id)}}">
-                                                    {{ (!empty( $challenge->title)) ?  $challenge->title : ''}}
-                                                </a>
-                                            </td>
-                                            <td>{{ (!empty( $challenge->instructions)) ?  $challenge->instructions : ''}}</td>
-                                            <td>{{ (!empty( $challenge->youtube_link)) ?  $challenge->youtube_link : ''}}</td>
-                                            <td>@if(!empty($challenge->picture))
-													<div class="popup-thumbnail img-responsive">
-														<img src="{{ asset('storage/customer/challenge/'.$challenge->picture) }} "
-															 height="35px" width="40px" alt="Challenge image">
-													</div>
-												@else
-													<a class="btn btn-default pull-centre btn-xs"><i class="fa fa-exclamation-triangle"></i> Nothing Uploaded</a>
-												@endif</td>
-                                            <td>{{ (!empty( $challenge->date_from)) ?  date(' d M Y', $challenge->date_from) : ''}} </td>
-                                            <td>{{ (!empty( $challenge->date_to)) ?  date(' d M Y', $challenge->date_to) : ''}} </td>
-                                            <td style="text-align: center;">
-                                                <span class="label label-info">{{ (!empty( $challenge->status) && $challenge->status == 1 ) ?  'Active' : 'Inactive'}}</span>
-                                            </td>
-                                            <td>
-                                            </td>
-                                        </tr>
-                                @endforeach
-                            @endif
+								@if (!empty($challenges))
+										@foreach ($challenges as $key => $challenge)
+											<tr id="categories-list">
+												<td nowrap>
+													<button vehice="button" id="edit_licence"
+															class="btn btn-warning  btn-xs"
+															data-toggle="modal" data-target="#edit-challenge-modal"
+															data-id="{{ $challenge->id }}"
+															data-title="{{ $challenge->title }}"
+															data-instructions="{{$challenge->instructions}}"
+															data-youtube_link="{{$challenge->youtube_link}}"
+															data-date_from="{{ date(' d M Y', $challenge->date_from)}}"
+															data-date_to="{{ date(' d M Y', $challenge->date_to)}}"
+															<i class="fa fa-pencil-square-o"></i> Edit
+													</button>
+												</td>
+												<td>
+													<a data-toggle="tooltip" title="Click to View Challenge"
+													   href="{{ route('challenge.show', $challenge->id)}}">
+														{{ (!empty( $challenge->title)) ?  $challenge->title : ''}}
+													</a>
+												</td>
+												<td>{{ (!empty( $challenge->instructions)) ?  $challenge->instructions : ''}}</td>
+												<td>{{ (!empty( $challenge->youtube_link)) ?  $challenge->youtube_link : ''}}</td>
+												<td>@if(!empty($challenge->picture))
+														<div class="popup-thumbnail img-responsive">
+															<img src="{{ asset('storage/customer/challenge/'.$challenge->picture) }} "
+																 height="70px" width="80px" alt="Challenge image">
+														</div>
+													@else
+														<a class="btn btn-default pull-centre btn-xs"><i class="fa fa-exclamation-triangle"></i> Nothing Uploaded</a>
+													@endif</td>
+												<td>{{ (!empty( $challenge->date_from)) ?  date(' d M Y', $challenge->date_from) : ''}} </td>
+												<td>{{ (!empty( $challenge->date_to)) ?  date(' d M Y', $challenge->date_to) : ''}} </td>
+												<td style="text-align: center;">
+													<span class="label label-info">{{ (!empty( $challenge->status) && $challenge->status == 1 ) ?  'Active' : 'Inactive'}}</span>
+												</td>
+												<td>
+												</td>
+											</tr>
+									@endforeach
+								@endif
                             </tbody>
                             <tfoot>
                             <tr>

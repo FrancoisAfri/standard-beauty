@@ -198,28 +198,7 @@ class CmsController extends Controller
         $news->link = $NewsData['link'];
         $news->expirydate = $Expdate;
         $news->update();
-		// get path 
-		$CompanyIdentity = CompanyIdentity::first();
-		$path = !empty($CompanyIdentity->document_root) ? $CompanyIdentity->document_root : '';
-		$path = $path."/CMS/images";
-		$Extensions = array('png', 'jpg');
-
-        $Files = isset($_FILES['image']) ? $_FILES['image'] : array();
-		if (isset($Files['name']) && $Files['name'] != '') {
-			$fileName = time(). '_' . $Files['name'];
-			$Explode = array();
-			$Explode = explode('.', $fileName);
-			$ext = end($Explode);
-			$ext = strtolower($ext);
-			if (in_array($ext, $Extensions)) {
-				if (!is_dir("$path")) mkdir("$path", 0775);
-				move_uploaded_file($Files['tmp_name'], "$path".'/' . $fileName) or die('Could not move file!');
-				$news->image = $fileName;
-                $news->update();
-			}
-		}
-		
-        /*if ($request->hasFile('image')) {
+		if ($request->hasFile('image')) {
             $fileExt = $request->file('image')->extension();
             if (in_array($fileExt, ['jpg', 'jpeg', 'png']) && $request->file('image')->isValid()) {
                 $fileName = time() . "image." . $fileExt;
@@ -228,7 +207,7 @@ class CmsController extends Controller
                 $news->image = $fileName;
                 $news->update();
             }
-        }*/
+        }
 
         AuditReportsController::store('Content Management', 'Content Updated', "Content Content Management Accessed", 0);
         return redirect('/cms/viewnews/' . $news->id)->with('success_application', "Content Update successfully.");
