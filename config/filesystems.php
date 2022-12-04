@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => '/home/standardbeautyaf/public_html/storage/app',
         ],
 
         'public' => [

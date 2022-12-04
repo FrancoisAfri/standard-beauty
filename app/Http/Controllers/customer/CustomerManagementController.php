@@ -87,10 +87,7 @@ class CustomerManagementController extends Controller
             'email' => 'bail|unique:contacts,email',
             'cell_number' => 'unique:contacts,cell_number',
         ]);
-		// get path 
-		$CompanyIdentity = CompanyIdentity::first();
-		$path = !empty($CompanyIdentity->document_root) ? $CompanyIdentity->document_root : '';
-		$path = $path."/customer/images";
+		
 		$contactsData = $request->all();
 
         //Cell number formatting
@@ -112,27 +109,11 @@ class CustomerManagementController extends Controller
 		//Save client record
 		$contacts_users->addPerson($person);
 		// save picture 
-		$Extensions = array('png', 'jpg');
 
-        $Files = isset($_FILES['picture']) ? $_FILES['picture'] : array();
-		if (isset($Files['name']) && $Files['name'] != '') {
-			$fileName = time(). '_' . $Files['name'];
-			$Explode = array();
-			$Explode = explode('.', $fileName);
-			$ext = end($Explode);
-			$ext = strtolower($ext);
-			if (in_array($ext, $Extensions)) {
-				if (!is_dir("$path")) mkdir("$path", 0775);
-				move_uploaded_file($Files['tmp_name'], "$path".'/' . $fileName) or die('Could not move file!');
-				$person->picture = $fileName;
-				$person->update();
-			}
-		}
-
-        //$this->verifyAndStoreImage('customer/images', 'picture', $person, $request);
+		$this->verifyAndStoreImage('customer/images', 'picture', $person, $request);
 
 		//Send email to client
-	    //Mail::to($contacts_users->email)->send(new ConfirmRegistration($contacts_users, $generatedPassword));
+	    Mail::to($contacts_users->email)->send(new ConfirmRegistration($contacts_users, $generatedPassword));
 
         AuditReportsController::store('Customer Management', 'Customer Added', "Accessed By User", 0);;
         return response()->json();
@@ -207,28 +188,8 @@ class CustomerManagementController extends Controller
 		$contact = contacts::find($contact);
 		$contact->cell_number = (empty($person->cell_number)) ? null : $person->cell_number;
         $contact->update($person);
-        //TODO FIX THE UPLOAD
-		// get path 
-		$CompanyIdentity = CompanyIdentity::first();
-		$path = !empty($CompanyIdentity->document_root) ? $CompanyIdentity->document_root : '';
-		$path = $path."/customer/images";
-		$Extensions = array('png', 'jpg');
 
-        $Files = isset($_FILES['picture']) ? $_FILES['picture'] : array();
-		if (isset($Files['name']) && $Files['name'] != '') {
-			$fileName = time(). '_' . $Files['name'];
-			$Explode = array();
-			$Explode = explode('.', $fileName);
-			$ext = end($Explode);
-			$ext = strtolower($ext);
-			if (in_array($ext, $Extensions)) {
-				if (!is_dir("$path")) mkdir("$path", 0775);
-				move_uploaded_file($Files['tmp_name'], "$path".'/' . $fileName) or die('Could not move file!');
-				$person->picture = $fileName;
-				$person->update();
-			}
-		}
-        //$this->verifyAndStoreImage('customer/images', 'picture', $contact, $request);
+        $this->verifyAndStoreImage('customer/images', 'picture', $contact, $request);
 
         Alert::toast('Record Updated Successfully ', 'success');
 
@@ -346,27 +307,8 @@ class CustomerManagementController extends Controller
 		
 		$challenge->save();
 		// save picture 
-		// get path 
-		$CompanyIdentity = CompanyIdentity::first();
-		$path = !empty($CompanyIdentity->document_root) ? $CompanyIdentity->document_root : '';
-		$path = $path."/customer/challenge";
-		$Extensions = array('png', 'jpg');
 
-        $Files = isset($_FILES['picture']) ? $_FILES['picture'] : array();
-		if (isset($Files['name']) && $Files['name'] != '') {
-			$fileName = time(). '_' . $Files['name'];
-			$Explode = array();
-			$Explode = explode('.', $fileName);
-			$ext = end($Explode);
-			$ext = strtolower($ext);
-			if (in_array($ext, $Extensions)) {
-				if (!is_dir("$path")) mkdir("$path", 0775);
-				move_uploaded_file($Files['tmp_name'], "$path".'/' . $fileName) or die('Could not move file!');
-				$challenge->picture = $fileName;
-				$challenge->update();
-			}
-		}
-        //$this->verifyAndStoreImage('customer/challenge', 'picture', $challenge, $request);
+		$this->verifyAndStoreImage('customer/challenge', 'picture', $challenge, $request);
         AuditReportsController::store('Customer Management', 'Challengeb Added', "Accessed By User", 0);;
         return response()->json();
     }
@@ -408,27 +350,7 @@ class CustomerManagementController extends Controller
         $challenge->date_to = $challengeData['youtube_link'];
         $challenge->update();
         // save picture 
-		// get path 
-		$CompanyIdentity = CompanyIdentity::first();
-		$path = !empty($CompanyIdentity->document_root) ? $CompanyIdentity->document_root : '';
-		$path = $path."/customer/challenge";
-		$Extensions = array('png', 'jpg');
-
-        $Files = isset($_FILES['picture']) ? $_FILES['picture'] : array();
-		if (isset($Files['name']) && $Files['name'] != '') {
-			$fileName = time(). '_' . $Files['name'];
-			$Explode = array();
-			$Explode = explode('.', $fileName);
-			$ext = end($Explode);
-			$ext = strtolower($ext);
-			if (in_array($ext, $Extensions)) {
-				if (!is_dir("$path")) mkdir("$path", 0775);
-				move_uploaded_file($Files['tmp_name'], "$path".'/' . $fileName) or die('Could not move file!');
-				$challenge->picture = $fileName;
-				$challenge->update();
-			}
-		}
-        //$this->verifyAndStoreImage('customer/challenge', 'picture', $challenge, $request);
+		$this->verifyAndStoreImage('customer/challenge', 'picture', $challenge, $request);
         AuditReportsController::store('Customer Management', 'Challenge Details Edited', "Edited By User", 0);;
         return response()->json();
     }
