@@ -136,7 +136,7 @@ class CustomerManagementController extends Controller
             "Customer Management",
             "Customer Management Search"
         );
-		$contact = $contact->load('medication','skinProfile','progess','review');
+		$contact = $contact->load('medication','skinProfile','progess','review','reminder');
 
         $data['contact'] = $contact;
 		

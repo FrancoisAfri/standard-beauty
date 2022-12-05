@@ -36,6 +36,9 @@ class contacts extends Model
 	public function review() {
         return $this->hasMany(ProductsReview::class, 'contact_id');
     }
+	public function reminder() {
+        return $this->hasMany(CustomerReminder::class, 'contact_id');
+    }
 	
 	//Relationship contacts and contacts_users
 	public function user() {

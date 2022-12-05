@@ -43,6 +43,9 @@
 										<li class="" data-toggle="tooltip" title="review"><a href="#review"
                                                                                        data-toggle="tab">Review</a>
                                         </li>
+										<li class="" data-toggle="tooltip" title="reminder"><a href="#reminder"
+                                                                                       data-toggle="tab">Reminder</a>
+                                        </li>
                                         <li class=" pull-right">
                                             <button type="button" class="btn btn-default pull-right" id="back_button"><i
                                                         class="fa fa-arrow-left"></i> Back
@@ -61,6 +64,9 @@
                                         </div>
 										<div class="tab-pane" id="review">
 											@include('contacts.Tabs.customer-review-tab')
+                                        </div>
+										<div class="tab-pane" id="reminder">
+											@include('contacts.Tabs.customer-reminder-tab')
                                         </div>
                                     </div>
                                     <!-- /.tab-content -->
