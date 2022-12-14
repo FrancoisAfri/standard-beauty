@@ -293,6 +293,7 @@
                     instructions: $('#'+modalID).find('#instructions').val(),
                     date_from_update: $('#'+modalID).find('#date_from_update').val(),
                     date_to_update: $('#'+modalID).find('#date_to_update').val(),
+                    youtube_link: $('#'+modalID).find('#youtube_link').val(),
                     _token: $('#'+modalID).find('input[name=_token]').val()
                 };
 

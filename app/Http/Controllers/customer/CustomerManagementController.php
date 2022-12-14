@@ -347,7 +347,7 @@ class CustomerManagementController extends Controller
         $challenge->instructions = $challengeData['instructions'];
         $challenge->date_from = $date_from;
         $challenge->date_to = $date_to;
-        $challenge->date_to = $challengeData['youtube_link'];
+        $challenge->youtube_link = $challengeData['youtube_link'];
         $challenge->update();
         // save picture 
 		$this->verifyAndStoreImage('customer/challenge', 'picture', $challenge, $request);
